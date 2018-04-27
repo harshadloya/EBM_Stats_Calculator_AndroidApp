@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layout_marginBottom="60dp">
+
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/likelihoodcalc_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightBlueColor">
+
+    <TextView
+        android:id="@+id/likelihood_preTestPercentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl2"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/likelihood_preTestPercentVal"/>
+
+    <EditText
+        android:id="@+id/likelihood_preTestPercentVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_40.0"
+        android:inputType="number"
+        android:text="@string/DefaultValue_40.0"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toEndOf="@+id/likelihood_preTestPercentLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/likelihood_probabilitySeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="13dp"
+        android:max="1000"
+        android:progress="400"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/likelihood_seekBarPercentLabel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_0percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/likelihood_probabilitySeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_seekBarPercentLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_25percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/likelihood_seekBarPercentLabel1"
+        app:layout_constraintEnd_toEndOf="@id/likelihood_seekBarPercentLabel3"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/likelihood_seekBarPercentLabel3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_50percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/likelihood_probabilitySeekBar"
+        app:layout_constraintEnd_toEndOf="@id/likelihood_probabilitySeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/likelihood_seekBarPercentLabel4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_75percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/likelihood_seekBarPercentLabel3"
+        app:layout_constraintEnd_toEndOf="@id/likelihood_probabilitySeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_seekBarPercentLabel5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_100percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="@id/likelihood_probabilitySeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/likelihood_posRatioLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/LikelihoodScreen_Lbl2"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/likelihood_preTestPercentLabel"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_probabilitySeekBar" />
+
+    <EditText
+        android:id="@+id/likelihood_posRatioVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_2.0"
+        android:inputType="number"
+        android:text="@string/DefaultValue_2.0"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/likelihood_posRatioLabel"
+        app:layout_constraintStart_toStartOf="@id/likelihood_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_probabilitySeekBar" />
+
+    <SeekBar
+        android:id="@+id/likelihood_posRatioSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="13dp"
+        android:max="100"
+        android:progress="20"
+        app:layout_constraintStart_toStartOf="@id/likelihood_probabilitySeekBar"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_posRatioLabel" />
+
+    <TextView
+        android:id="@+id/likelihood_negRatioLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/LikelihoodScreen_Lbl3"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@id/likelihood_posRatioLabel"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_posRatioSeekBar" />
+
+    <EditText
+        android:id="@+id/likelihood_negRatioVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_0.5"
+        android:inputType="number"
+        android:text="@string/DefaultValue_0.5"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/likelihood_negRatioLabel"
+        app:layout_constraintStart_toStartOf="@id/likelihood_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_posRatioSeekBar" />
+
+    <SeekBar
+        android:id="@+id/likelihood_negRatioSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="13dp"
+        android:max="100"
+        android:progress="5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_negRatioLabel" />
+
+    <TextView
+        android:id="@+id/likelihood_postTestProbabilityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/LikelihoodScreen_Lbl4"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_negRatioSeekBar" />
+
+    <TextView
+        android:id="@+id/likelihood_testPosLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/LikelihoodScreen_Lbl5"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/likelihood_postTestProbabilityLabel"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_postTestProbabilityLabel" />
+
+    <EditText
+        android:id="@+id/likelihood_testPosVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_Prob"
+        android:inputType="number"
+        android:text="@string/DefaultValue_Prob"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/likelihood_testPosLabel"
+        app:layout_constraintStart_toStartOf="@id/likelihood_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_postTestProbabilityLabel" />
+
+    <TextView
+        android:id="@+id/likelihood_testNegLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/LikelihoodScreen_Lbl6"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/likelihood_postTestProbabilityLabel"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_testPosLabel" />
+
+    <EditText
+        android:id="@+id/likelihood_testNegVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_Prob"
+        android:inputType="number"
+        android:text="@string/DefaultValue_Prob"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/likelihood_testNegLabel"
+        app:layout_constraintStart_toStartOf="@id/likelihood_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_testPosVal" />
+
+    <Button
+        android:id="@+id/likelihood_moreInfoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/rectborder"
+        android:text="@string/moreInfoButton"
+        android:textColor="@color/mainScreenTabColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/likelihood_testNegLabel" />
+
+</android.support.constraint.ConstraintLayout>
+</ScrollView>

@@ -1,0 +1,625 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:layout_marginBottom="60dp">
+
+<android.support.constraint.ConstraintLayout
+    android:id="@+id/sensspeccalcparent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/lightBlueColor"
+    android:focusableInTouchMode="true">
+
+    <TextView
+        android:id="@+id/sensspec_populationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl1"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/sensspec_populationButtons"
+        android:layout_width="210dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_populationLabel"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ToggleButton
+            android:id="@+id/sensspec_populationValue1"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/nntscreenbuttons"
+            android:checked="true"
+            android:text="@string/SensSpecCalcScreen_PopuVal1"
+            android:textColor="@drawable/nntscreenbuttontext"
+            android:textOff="@string/SensSpecCalcScreen_PopuVal1"
+            android:textOn="@string/SensSpecCalcScreen_PopuVal1"
+            app:layout_constraintEnd_toStartOf="@+id/sensspec_populationValue2"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ToggleButton
+            android:id="@+id/sensspec_populationValue2"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/nntscreenbuttons"
+            android:text="@string/SensSpecCalcScreen_PopuVal2"
+            android:textColor="@drawable/nntscreenbuttontext"
+            android:textOff="@string/SensSpecCalcScreen_PopuVal2"
+            android:textOn="@string/SensSpecCalcScreen_PopuVal2"
+            app:layout_constraintEnd_toStartOf="@+id/populationValue3"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/sensspec_populationValue1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ToggleButton
+            android:id="@+id/sensspec_populationValue3"
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:background="@drawable/nntscreenbuttons"
+            android:text="@string/SensSpecCalcScreen_PopuVal3"
+            android:textColor="@drawable/nntscreenbuttontext"
+            android:textOff="@string/SensSpecCalcScreen_PopuVal3"
+            android:textOn="@string/SensSpecCalcScreen_PopuVal3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/sensspec_populationValue2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sensspec_preTestPercentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl2"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_populationLabel" />
+
+    <EditText
+        android:id="@+id/sensspec_preTestPercentVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_40.0"
+        android:inputType="numberDecimal"
+        android:text="@string/DefaultValue_40.0"
+        android:textAlignment="center"
+        android:imeOptions="actionDone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_preTestPercentLabel"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_populationButtons" />
+
+    <SeekBar
+        android:id="@+id/sensspec_seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="13dp"
+        android:max="1000"
+        android:progress="400"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_seekBarPercentLabel1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_0percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/sensspec_seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_seekBarPercentLabel2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_25percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/sensspec_seekBarPercentLabel1"
+        app:layout_constraintEnd_toEndOf="@id/sensspec_seekBarPercentLabel3"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_seekBarPercentLabel3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_50percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/sensspec_seekBar"
+        app:layout_constraintEnd_toEndOf="@id/sensspec_seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_seekBarPercentLabel4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_75percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@id/sensspec_seekBarPercentLabel3"
+        app:layout_constraintEnd_toEndOf="@id/sensspec_seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_seekBarPercentLabel5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:includeFontPadding="false"
+        android:text="@string/DefaultValue_100percent"
+        android:textSize="10sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toEndOf="@id/sensspec_seekBar"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_preTestPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_sensitivityPercentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl3"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_seekBar" />
+
+    <EditText
+        android:id="@+id/sensspec_sensitivityPercentVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_90.0"
+        android:inputType="numberDecimal"
+        android:text="@string/DefaultValue_90.0"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_sensitivityPercentLabel"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_seekBar" />
+
+    <TextView
+        android:id="@+id/sensspec_specificityPercentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl4"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_sensitivityPercentLabel" />
+
+    <EditText
+        android:id="@+id/sensspec_specificityPercentVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_90.0"
+        android:inputType="numberDecimal"
+        android:text="@string/DefaultValue_90.0"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_specificityPercentLabel"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_sensitivityPercentVal" />
+
+    <TextView
+        android:id="@+id/sensspec_diseaseLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl5"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_specificityPercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_posLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl6"
+        android:textSize="18sp"
+        android:includeFontPadding="false"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_diseaseLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_negLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl7"
+        android:textSize="18sp"
+        android:includeFontPadding="false"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@id/sensspec_posLabel"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_diseaseLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_testPosLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl8"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_posLabel" />
+
+    <EditText
+        android:id="@+id/sensspec_testPosPosVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_TrueP"
+        android:inputType="number"
+        android:text="@string/DefaultValue_TrueP"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_testPosLabel"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_posLabel" />
+
+    <EditText
+        android:id="@+id/sensspec_testPosNegVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_FalseP"
+        android:inputType="number"
+        android:text="@string/DefaultValue_FalseP"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_testPosPosVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_negLabel" />
+
+    <EditText
+        android:id="@+id/sensspec_testPosTotalVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_TestP"
+        android:inputType="number"
+        android:text="@string/DefaultValue_TestP"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_testPosNegVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_negLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_testNegLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl9"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_testPosLabel" />
+
+    <EditText
+        android:id="@+id/sensspec_testNegPosVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_FalseN"
+        android:inputType="number"
+        android:text="@string/DefaultValue_FalseN"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_testNegLabel"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_testPosPosVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_testPosPosVal" />
+
+    <EditText
+        android:id="@+id/sensspec_testNegNegVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_TrueN"
+        android:inputType="number"
+        android:text="@string/DefaultValue_TrueN"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_testNegPosVal"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_testPosNegVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_testPosNegVal" />
+
+    <EditText
+        android:id="@+id/sensspec_testNegTotalVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_TestN"
+        android:inputType="number"
+        android:text="@string/DefaultValue_TestN"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_testNegNegVal"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_testPosTotalVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_testPosTotalVal" />
+
+    <EditText
+        android:id="@+id/sensspec_totalPosVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_DzP"
+        android:inputType="number"
+        android:text="@string/DefaultValue_DzP"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_testNegPosVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_testNegPosVal" />
+
+    <EditText
+        android:id="@+id/sensspec_totalNegVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_DzN"
+        android:inputType="number"
+        android:text="@string/DefaultValue_DzN"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_testNegNegVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_testNegNegVal" />
+
+    <EditText
+        android:id="@+id/sensspec_totalVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_Total"
+        android:inputType="number"
+        android:text="@string/DefaultValue_Total"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_testNegTotalVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_testNegTotalVal" />
+
+    <TextView
+        android:id="@+id/sensspec_posPredictivePercentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl10"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_totalPosVal" />
+
+    <EditText
+        android:id="@+id/sensspec_posPredictivePercentVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_PPV"
+        android:inputType="number"
+        android:text="@string/DefaultValue_PPV"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_posPredictivePercentLabel"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_totalVal" />
+
+    <TextView
+        android:id="@+id/sensspec_negPredictivePercentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl11"
+        android:textSize="18sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_posPredictivePercentLabel" />
+
+    <EditText
+        android:id="@+id/sensspec_negPredictivePercentVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_NPV"
+        android:inputType="number"
+        android:text="@string/DefaultValue_NPV"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_negPredictivePercentLabel"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_posPredictivePercentVal" />
+
+    <EditText
+        android:id="@+id/sensspec_posPostTestProbPercentVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_Prob"
+        android:inputType="number"
+        android:text="@string/DefaultValue_Prob"
+        android:textAlignment="center"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_negPredictivePercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_smallPosLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl6"
+        android:textSize="13sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_posPostTestProbPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_negPredictivePercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_smallPostTestProbLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl12"
+        android:textSize="13sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_negPredictivePercentLabel" />
+
+    <TextView
+        android:id="@+id/sensspec_smallNegLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="18dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="17dp"
+        android:gravity="center"
+        android:text="@string/SensSpecCalcScreen_Lbl7"
+        android:textSize="13sp"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintEnd_toStartOf="@+id/sensspec_negPostTestProbPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_negPredictivePercentLabel" />
+
+    <EditText
+        android:id="@+id/sensspec_negPostTestProbPercentVal"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/rectborder"
+        android:ems="10"
+        android:hint="@string/DefaultValue_Prob"
+        android:inputType="number"
+        android:text="@string/DefaultValue_Prob"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toEndOf="@+id/sensspec_smallNegLabel"
+        app:layout_constraintStart_toStartOf="@+id/sensspec_preTestPercentVal"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_negPredictivePercentVal" />
+
+    <Button
+        android:id="@+id/sensspec_moreInfoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/moreInfoButton"
+        android:textColor="@color/mainScreenTabColor"
+        android:textSize="18sp"
+        android:background="@drawable/rectborder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sensspec_smallPostTestProbLabel" />
+
+</android.support.constraint.ConstraintLayout>
+</ScrollView>
