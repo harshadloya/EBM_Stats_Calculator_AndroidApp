@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Locale;
+
 import jsteingberg.ebmstatscalc.util.HelperView;
 
 public class NNTCalcScreen extends Fragment
@@ -44,7 +46,7 @@ public class NNTCalcScreen extends Fragment
 
         initializeComponents(view);
         setFilters();
-        assignListeners();
+        assignListeners(view);
 
         NNTMoreInfoScreen nntMoreInfoScreen = new NNTMoreInfoScreen();
         HelperView helperView = new HelperView(nntMoreInfoScreen, getFragmentManager(), "replaceWithNNTMoreInfoScreen");
@@ -84,11 +86,73 @@ public class NNTCalcScreen extends Fragment
         HelperView.setFiltersEditText(rateEditText10, "1", "100");
     }
 
-    private void assignListeners()
+    private void assignListeners(View v)
     {
-        rateEditText1.addTextChangedListener(set1Watcher);
-        rateEditText1.setOnEditorActionListener(onEditorActionListener);
+        //rateEditText1.setOnFocusChangeListener(watcherFocusChangeListener);
+        //for(EditText rateEditTexts: v)
+        editTextsRecurseListeners((ViewGroup) v);
     }
+
+    private void editTextsRecurseListeners(ViewGroup container) {
+        int count = container.getChildCount();
+
+        for (int i = 0; i < count; i++) {
+            View child = container.getChildAt(i);
+            if (child instanceof EditText)
+            {
+                //rateEditText = (EditText) child;
+                //int currId = rateEditText.getId();
+                //((EditText) child).setOnFocusChangeListener(watcherFocusChangeListener);
+                child.setOnFocusChangeListener(watcherFocusChangeListener);
+                ((EditText) child).setOnEditorActionListener(editTextsEditorActionListener);
+            }
+            else if (child instanceof ViewGroup) {
+                //recurse through children views
+                editTextsRecurseListeners((ViewGroup) child);
+            }
+        }
+    }
+
+    private View.OnFocusChangeListener watcherFocusChangeListener = new View.OnFocusChangeListener()
+    {
+        @Override
+        public void onFocusChange(View v, boolean hasFocus)
+        {
+            switch(v.getId())
+            {
+                case R.id.nnt_rateEdit1:
+                case R.id.nnt_rateEdit2:
+                    if(hasFocus) {
+                        ((EditText) v).addTextChangedListener(set1Watcher);
+                    }
+                    else /*if(!hasFocus)*/ {
+                        ((EditText) v).removeTextChangedListener(set1Watcher);
+                    }
+                    break;
+                case R.id.nnt_rateEdit4:
+                case R.id.nnt_rateEdit5:
+                    if(hasFocus) {
+                        ((EditText) v).addTextChangedListener(set2Watcher);
+                    }
+                    else /*if(!hasFocus)*/ {
+                        ((EditText) v).removeTextChangedListener(set2Watcher);
+                    }
+                    break;
+
+                case R.id.nnt_rateEdit7:
+                case R.id.nnt_rateEdit8:
+                case R.id.nnt_rateEdit9:
+                case R.id.nnt_rateEdit10:
+                    if(hasFocus) {
+                        ((EditText) v).addTextChangedListener(set3Watcher);
+                    }
+                    else /*if(!hasFocus)*/ {
+                        ((EditText) v).removeTextChangedListener(set3Watcher);
+                    }
+                    break;
+            }
+        }
+    };
 
     private TextWatcher set1Watcher = new TextWatcher()
     {
@@ -99,23 +163,34 @@ public class NNTCalcScreen extends Fragment
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count)
         {
+            double changedValue;
+
             double rate1 = 0.0;
             double rate2 = 0.0;
-            double nnt = 0.0;
-            if(!s.toString().equalsIgnoreCase(""))
-                rate1 = Double.parseDouble(s.toString());
-            else
-                rate1 = 0.0;
 
-            if(!rateEditText2.getText().toString().equalsIgnoreCase(""))
-                rate2 = Double.parseDouble(rateEditText2.getText().toString());
+            double nnt;
+
+            if(!s.toString().equalsIgnoreCase(""))
+                changedValue = Double.parseDouble(s.toString());
             else
-                rate2 = 0.0;
+                changedValue = 0.0;
+
+            if(s.hashCode() == rateEditText1.getText().hashCode())
+            {
+                rate1 = changedValue;
+                rate2 = getValue(rateEditText2);
+            }
+            else if(s.hashCode() == rateEditText2.getText().hashCode())
+            {
+                rate1 = getValue(rateEditText1);
+                rate2 = changedValue;
+            }
 
             nnt = rate1 - rate2;
             nnt = 1 / nnt;
 
-            rateTextView3.setText(String.format("%.1f", nnt));
+            rateTextView3.setText(String.format(Locale.getDefault(), "%.1f", nnt));
+
         }
 
         @Override
@@ -123,9 +198,12 @@ public class NNTCalcScreen extends Fragment
         }
     };
 
-    private void updateTextView3()
+    private double getValue(EditText editText)
     {
-
+        if(!editText.getText().toString().equalsIgnoreCase(""))
+            return Double.parseDouble(editText.getText().toString());
+        else
+            return 0.0;
     }
 
     private TextWatcher set2Watcher = new TextWatcher()
@@ -138,6 +216,33 @@ public class NNTCalcScreen extends Fragment
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+            int changedValue;
+
+            int percentAge1 = 0;
+            int percentAge2 = 0;
+
+            double nnt;
+
+            if(!s.toString().equalsIgnoreCase(""))
+                changedValue = Integer.parseInt(s.toString());
+            else
+                changedValue = 0;
+
+            if(s.hashCode() == rateEditText4.getText().hashCode())
+            {
+                percentAge1 = changedValue;
+                percentAge2 = (int) getValue(rateEditText5);
+            }
+            else if(s.hashCode() == rateEditText5.getText().hashCode())
+            {
+                percentAge1 = (int) getValue(rateEditText4);
+                percentAge2 = changedValue;
+            }
+
+            nnt = percentAge1 - percentAge2;
+            nnt = 1 / nnt;
+
+            rateTextView6.setText(String.format(Locale.getDefault(), "%.1f", nnt));
         }
 
         @Override
@@ -156,6 +261,57 @@ public class NNTCalcScreen extends Fragment
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+            double events1 = 0;
+            double events2 = 0;
+            double patients1 = 0;
+            double patients2 = 0;
+
+            double changedValue;
+            double temp1;
+            double temp2;
+
+            double nnt;
+
+            if(!s.toString().equalsIgnoreCase(""))
+                changedValue = Double.parseDouble(s.toString());
+            else
+                changedValue = 0;
+
+            if(s.hashCode() == rateEditText7.getText().hashCode())
+            {
+                events1 = changedValue;
+                patients1 = getValue(rateEditText8);
+                events2 = getValue(rateEditText9);
+                patients2 = getValue(rateEditText10);
+            }
+            else if(s.hashCode() == rateEditText8.getText().hashCode())
+            {
+                events1 = getValue(rateEditText7);
+                patients1 = changedValue;
+                events2 = getValue(rateEditText9);
+                patients2 = getValue(rateEditText10);
+            }
+            else if(s.hashCode() == rateEditText9.getText().hashCode())
+            {
+                events1 = getValue(rateEditText7);
+                patients1 = getValue(rateEditText8);
+                events2 = changedValue;
+                patients2 = getValue(rateEditText10);
+            }
+            else if(s.hashCode() == rateEditText10.getText().hashCode())
+            {
+                events1 = getValue(rateEditText7);
+                patients1 = getValue(rateEditText8);
+                events2 = getValue(rateEditText9);
+                patients2 = changedValue;
+            }
+
+            temp1 = events1 / patients1;
+            temp2 = events2 / patients2;
+            nnt = temp1 - temp2;
+            nnt = 1 / nnt;
+
+            rateTextView11.setText(String.format(Locale.getDefault(), "%.1f", nnt));
         }
 
         @Override
@@ -164,7 +320,7 @@ public class NNTCalcScreen extends Fragment
         }
     };
 
-    private EditText.OnEditorActionListener onEditorActionListener = new EditText.OnEditorActionListener()
+    private EditText.OnEditorActionListener editTextsEditorActionListener = new EditText.OnEditorActionListener()
     {
         @Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
