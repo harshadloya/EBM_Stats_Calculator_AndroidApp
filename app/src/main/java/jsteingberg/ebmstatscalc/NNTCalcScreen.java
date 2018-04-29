@@ -55,8 +55,12 @@ public class NNTCalcScreen extends Fragment
         return view;
     }
 
-    private void initializeComponents(View view)
-    {
+    /**
+     * Method where all components are initialized from the View
+     *
+     * @param view - View that has all the components
+     */
+    private void initializeComponents(View view) {
         moreInfoBtn = (Button) view.findViewById(R.id.nnt_moreInfoBtn);
 
         nntParent = (ConstraintLayout) view.findViewById(R.id.nnt_parent);
@@ -74,8 +78,10 @@ public class NNTCalcScreen extends Fragment
         rateTextView11 = (TextView) view.findViewById(R.id.nnt_rateEdit11);
     }
 
-    private void setFilters()
-    {
+    /**
+     * Method to set restrictions (if any needed) on components
+     */
+    private void setFilters() {
         HelperView.setFiltersEditText_2Decimals(rateEditText1, "0.00", "1.00");
         HelperView.setFiltersEditText_2Decimals(rateEditText2, "0.00", "1.00");
         HelperView.setFiltersEditText(rateEditText4, "0", "100");
@@ -86,46 +92,50 @@ public class NNTCalcScreen extends Fragment
         HelperView.setFiltersEditText(rateEditText10, "1", "100");
     }
 
-    private void assignListeners(View v)
-    {
+    /**
+     * Method to assign listeners to components
+     * @param v - the view that may be needed for Recursion
+     */
+    private void assignListeners(View v) {
         //rateEditText1.setOnFocusChangeListener(watcherFocusChangeListener);
         //for(EditText rateEditTexts: v)
         editTextsRecurseListeners((ViewGroup) v);
     }
 
+    /**
+     * Method that recursively assigns listeners to all the EditTexts
+     * @param container - the view that contains all the components
+     */
     private void editTextsRecurseListeners(ViewGroup container) {
         int count = container.getChildCount();
 
         for (int i = 0; i < count; i++) {
             View child = container.getChildAt(i);
-            if (child instanceof EditText)
-            {
+            if (child instanceof EditText) {
                 //rateEditText = (EditText) child;
                 //int currId = rateEditText.getId();
                 //((EditText) child).setOnFocusChangeListener(watcherFocusChangeListener);
                 child.setOnFocusChangeListener(watcherFocusChangeListener);
                 ((EditText) child).setOnEditorActionListener(editTextsEditorActionListener);
-            }
-            else if (child instanceof ViewGroup) {
+            } else if (child instanceof ViewGroup) {
                 //recurse through children views
                 editTextsRecurseListeners((ViewGroup) child);
             }
         }
     }
 
-    private View.OnFocusChangeListener watcherFocusChangeListener = new View.OnFocusChangeListener()
-    {
+    /**
+     * Focus Change Listener that assigns text change listener if the edittext has focus and removes it when the edittext loses focus.
+     */
+    private View.OnFocusChangeListener watcherFocusChangeListener = new View.OnFocusChangeListener() {
         @Override
-        public void onFocusChange(View v, boolean hasFocus)
-        {
-            switch(v.getId())
-            {
+        public void onFocusChange(View v, boolean hasFocus) {
+            switch(v.getId()) {
                 case R.id.nnt_rateEdit1:
                 case R.id.nnt_rateEdit2:
                     if(hasFocus) {
                         ((EditText) v).addTextChangedListener(set1Watcher);
-                    }
-                    else /*if(!hasFocus)*/ {
+                    } else /*if(!hasFocus)*/ {
                         ((EditText) v).removeTextChangedListener(set1Watcher);
                     }
                     break;
@@ -133,8 +143,7 @@ public class NNTCalcScreen extends Fragment
                 case R.id.nnt_rateEdit5:
                     if(hasFocus) {
                         ((EditText) v).addTextChangedListener(set2Watcher);
-                    }
-                    else /*if(!hasFocus)*/ {
+                    } else /*if(!hasFocus)*/ {
                         ((EditText) v).removeTextChangedListener(set2Watcher);
                     }
                     break;
@@ -145,8 +154,7 @@ public class NNTCalcScreen extends Fragment
                 case R.id.nnt_rateEdit10:
                     if(hasFocus) {
                         ((EditText) v).addTextChangedListener(set3Watcher);
-                    }
-                    else /*if(!hasFocus)*/ {
+                    } else /*if(!hasFocus)*/ {
                         ((EditText) v).removeTextChangedListener(set3Watcher);
                     }
                     break;
@@ -154,15 +162,16 @@ public class NNTCalcScreen extends Fragment
         }
     };
 
-    private TextWatcher set1Watcher = new TextWatcher()
-    {
+    /**
+     * Text Change Watcher that listens to changes in the two rates edittexts and sets the NNT value accordingly
+     */
+    private TextWatcher set1Watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
         }
 
         @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count)
-        {
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
             double changedValue;
 
             double rate1 = 0.0;
@@ -175,18 +184,15 @@ public class NNTCalcScreen extends Fragment
             else
                 changedValue = 0.0;
 
-            if(s.hashCode() == rateEditText1.getText().hashCode())
-            {
+            if(s.hashCode() == rateEditText1.getText().hashCode()) {
                 rate1 = changedValue;
                 rate2 = getValue(rateEditText2);
-            }
-            else if(s.hashCode() == rateEditText2.getText().hashCode())
-            {
+            } else if(s.hashCode() == rateEditText2.getText().hashCode()) {
                 rate1 = getValue(rateEditText1);
                 rate2 = changedValue;
             }
 
-            nnt = rate1 - rate2;
+            nnt = Math.abs(rate1 - rate2);
             nnt = 1 / nnt;
 
             rateTextView3.setText(String.format(Locale.getDefault(), "%.1f", nnt));
@@ -198,16 +204,22 @@ public class NNTCalcScreen extends Fragment
         }
     };
 
-    private double getValue(EditText editText)
-    {
+    /**
+     * Method used to get value from the edittexts
+     * @param editText - the edittext from which the value need to be returned
+     * @return the value entered in the edittext, if no value present returns 0.0
+     */
+    private double getValue(EditText editText) {
         if(!editText.getText().toString().equalsIgnoreCase(""))
             return Double.parseDouble(editText.getText().toString());
         else
             return 0.0;
     }
 
-    private TextWatcher set2Watcher = new TextWatcher()
-    {
+    /**
+     * Text Change Watcher that listens to changes in the two percentages edittexts and sets the NNT value accordingly
+     */
+    private TextWatcher set2Watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -228,18 +240,15 @@ public class NNTCalcScreen extends Fragment
             else
                 changedValue = 0;
 
-            if(s.hashCode() == rateEditText4.getText().hashCode())
-            {
+            if(s.hashCode() == rateEditText4.getText().hashCode()) {
                 percentAge1 = changedValue;
                 percentAge2 = (int) getValue(rateEditText5);
-            }
-            else if(s.hashCode() == rateEditText5.getText().hashCode())
-            {
+            } else if(s.hashCode() == rateEditText5.getText().hashCode()) {
                 percentAge1 = (int) getValue(rateEditText4);
                 percentAge2 = changedValue;
             }
 
-            nnt = percentAge1 - percentAge2;
+            nnt = Math.abs(percentAge1 - percentAge2);
             nnt = 1 / nnt;
 
             rateTextView6.setText(String.format(Locale.getDefault(), "%.1f", nnt));
@@ -251,8 +260,10 @@ public class NNTCalcScreen extends Fragment
         }
     };
 
-    private TextWatcher set3Watcher = new TextWatcher()
-    {
+    /**
+     * Text Change Watcher that listens to changes in the number of events and patients edittexts and sets the NNT value accordingly
+     */
+    private TextWatcher set3Watcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -277,29 +288,22 @@ public class NNTCalcScreen extends Fragment
             else
                 changedValue = 0;
 
-            if(s.hashCode() == rateEditText7.getText().hashCode())
-            {
+            if(s.hashCode() == rateEditText7.getText().hashCode()) {
                 events1 = changedValue;
                 patients1 = getValue(rateEditText8);
                 events2 = getValue(rateEditText9);
                 patients2 = getValue(rateEditText10);
-            }
-            else if(s.hashCode() == rateEditText8.getText().hashCode())
-            {
+            } else if(s.hashCode() == rateEditText8.getText().hashCode()) {
                 events1 = getValue(rateEditText7);
                 patients1 = changedValue;
                 events2 = getValue(rateEditText9);
                 patients2 = getValue(rateEditText10);
-            }
-            else if(s.hashCode() == rateEditText9.getText().hashCode())
-            {
+            } else if(s.hashCode() == rateEditText9.getText().hashCode()) {
                 events1 = getValue(rateEditText7);
                 patients1 = getValue(rateEditText8);
                 events2 = changedValue;
                 patients2 = getValue(rateEditText10);
-            }
-            else if(s.hashCode() == rateEditText10.getText().hashCode())
-            {
+            } else if(s.hashCode() == rateEditText10.getText().hashCode()) {
                 events1 = getValue(rateEditText7);
                 patients1 = getValue(rateEditText8);
                 events2 = getValue(rateEditText9);
@@ -308,7 +312,7 @@ public class NNTCalcScreen extends Fragment
 
             temp1 = events1 / patients1;
             temp2 = events2 / patients2;
-            nnt = temp1 - temp2;
+            nnt = Math.abs(temp1 - temp2);
             nnt = 1 / nnt;
 
             rateTextView11.setText(String.format(Locale.getDefault(), "%.1f", nnt));
@@ -320,13 +324,15 @@ public class NNTCalcScreen extends Fragment
         }
     };
 
-    private EditText.OnEditorActionListener editTextsEditorActionListener = new EditText.OnEditorActionListener()
-    {
+    /**
+     * Editor Action Listener to handle the event when done on keypad or enter was pressed
+     * <br/>
+     * Moves the focus back to parent layout to remove the cursor from the edittext
+     */
+    private EditText.OnEditorActionListener editTextsEditorActionListener = new EditText.OnEditorActionListener() {
         @Override
-        public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
-        {
-            if(actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
-            {
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if(actionId == EditorInfo.IME_ACTION_DONE || (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                 InputMethodManager iMgr = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 iMgr.hideSoftInputFromWindow(nntParent.getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
