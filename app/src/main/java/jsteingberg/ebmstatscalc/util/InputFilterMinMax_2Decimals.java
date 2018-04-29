@@ -17,7 +17,7 @@ public class InputFilterMinMax_2Decimals extends InputFilterMinMax {
             newVal = newVal.substring(0, dstart) + source.toString() + newVal.substring(dstart, newVal.length());
 
             int decimalPosition = newVal.indexOf('.');
-            if(newVal.substring(decimalPosition+1).length() > 2)
+            if (decimalPosition != -1 && newVal.substring(decimalPosition + 1).length() > 2)
                 return "";
 
             double input = Double.parseDouble(newVal);

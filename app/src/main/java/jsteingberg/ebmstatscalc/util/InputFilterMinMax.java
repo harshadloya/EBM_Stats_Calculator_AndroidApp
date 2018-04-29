@@ -29,7 +29,7 @@ public class InputFilterMinMax implements InputFilter {
             newVal = newVal.substring(0, dstart) + source.toString() + newVal.substring(dstart, newVal.length());
 
             int decimalPosition = newVal.indexOf('.');
-            if(newVal.substring(decimalPosition+1).length() > 1)
+            if (decimalPosition != -1 && newVal.substring(decimalPosition + 1).length() > 1)
                 return "";
 
             double input = Double.parseDouble(newVal);
