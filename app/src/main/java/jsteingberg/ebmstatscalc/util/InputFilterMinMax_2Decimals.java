@@ -4,7 +4,7 @@ import android.text.Spanned;
 
 public class InputFilterMinMax_2Decimals extends InputFilterMinMax {
 
-    public InputFilterMinMax_2Decimals(String min, String max) {
+    InputFilterMinMax_2Decimals(String min, String max) {
         super(min, max);
     }
 
@@ -25,6 +25,7 @@ public class InputFilterMinMax_2Decimals extends InputFilterMinMax {
                 return null;
         }
         catch (NumberFormatException nfe) {
+            return "";
         }
         return "";
     }

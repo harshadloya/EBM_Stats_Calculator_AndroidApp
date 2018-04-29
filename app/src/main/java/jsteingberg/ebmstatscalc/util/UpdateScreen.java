@@ -11,8 +11,8 @@ public class UpdateScreen
 
     /**
      * Updates the UI on the screen when the tabs are changed
-     * @param fragment
-     * @param fragmentManager
+     * @param fragment - new fragment that will be displayed on the UI
+     * @param fragmentManager - fragment manager needed to perform the update
      */
     public static void performScreenUpdateTabs(Fragment fragment, FragmentManager fragmentManager)
     {
@@ -24,9 +24,9 @@ public class UpdateScreen
 
     /**
      * Updates the UI on the screen when a button on a tab is pressed
-     * @param fragment
-     * @param fragmentManager
-     * @param backStackStateName
+     * @param fragment - new fragment that will be displayed on the UI
+     * @param fragmentManager - fragment manager needed to perform the update
+     * @param backStackStateName - name of the fragment being added to the stack
      */
     public static void performScreenUpdateButtons(Fragment fragment, FragmentManager fragmentManager, String backStackStateName)
     {
