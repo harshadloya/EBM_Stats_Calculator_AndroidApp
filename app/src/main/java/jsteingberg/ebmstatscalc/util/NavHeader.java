@@ -1,9 +1,11 @@
-package jsteingberg.ebmstatscalc;
+package jsteingberg.ebmstatscalc.util;
 
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import jsteingberg.ebmstatscalc.R;
 
 /**
  * Created by hloya on 2/17/2018.
@@ -17,9 +19,9 @@ public class NavHeader extends Fragment
 
     public void setProfileInDrawer(View view)
     {
-        imageView = (ImageView) view.findViewById(R.id.profileImage);
-        textView1 = (TextView) view.findViewById(R.id.userName);
-        textView2 = (TextView) view.findViewById(R.id.userEmail);
+        imageView = view.findViewById(R.id.profileImage);
+        textView1 = view.findViewById(R.id.userName);
+        textView2 = view.findViewById(R.id.userEmail);
 
         /*GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().requestProfile().build();
 

@@ -1,4 +1,4 @@
-package jsteingberg.ebmstatscalc;
+package jsteingberg.ebmstatscalc.fragments.homeScreencalculators.moreInfoFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,19 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class PostTestMoreInfoScreen extends Fragment
+import jsteingberg.ebmstatscalc.R;
+
+public class NNTMoreInfoScreen extends Fragment
 {
-    private TextView postTestMoreInfoText;
+    private TextView nntMoreInfoText;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.posttest_moreinfo_screen, container, false);
+        View view = inflater.inflate(R.layout.nntmoreinfo_screen, container, false);
 
-        postTestMoreInfoText = view.findViewById(R.id.posttest_moreInfo_text);
-        postTestMoreInfoText.setMovementMethod(new ScrollingMovementMethod());
-        postTestMoreInfoText.setText(R.string.postTest_moreInfo_text);
+        nntMoreInfoText = view.findViewById(R.id.nnt_moreInfo_text);
+        nntMoreInfoText.setMovementMethod(new ScrollingMovementMethod());
+        nntMoreInfoText.setText(R.string.nnt_moreInfo_text);
 
         return view;
     }
@@ -30,7 +32,7 @@ public class PostTestMoreInfoScreen extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
     {
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.actionbar_MoreInfoPostTest);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.actionbar_MoreInfoNNT);
         super.onActivityCreated(savedInstanceState);
     }
 }

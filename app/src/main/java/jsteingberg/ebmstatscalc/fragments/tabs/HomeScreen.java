@@ -1,4 +1,4 @@
-package jsteingberg.ebmstatscalc;
+package jsteingberg.ebmstatscalc.fragments.tabs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import jsteingberg.ebmstatscalc.R;
+import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.LikelihoodRatiosCalcScreen;
+import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.NNTCalcScreen;
+import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.SensSpecCalcScreen;
 import jsteingberg.ebmstatscalc.util.UpdateScreen;
 
 /**
@@ -25,7 +29,7 @@ public class HomeScreen extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_screen, container, false);
 
-        button1 = (Button) view.findViewById(R.id.homeScreen_button1);
+        button1 = view.findViewById(R.id.homeScreen_button1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,7 +38,7 @@ public class HomeScreen extends Fragment {
             }
         });
 
-        button2 = (Button) view.findViewById(R.id.homeScreen_button2);
+        button2 = view.findViewById(R.id.homeScreen_button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +47,7 @@ public class HomeScreen extends Fragment {
             }
         });
 
-        button3 = (Button) view.findViewById(R.id.homeScreen_button3);
+        button3 = view.findViewById(R.id.homeScreen_button3);
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,9 +55,9 @@ public class HomeScreen extends Fragment {
                 UpdateScreen.performScreenUpdateButtons(likelihoodRatiosCalcScreen, getFragmentManager(), "replaceWithLikelihoodRatiosCalculatorScreen");
             }
         });
+
         return view;
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState)
@@ -61,5 +65,4 @@ public class HomeScreen extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.actionbar_HomeScreen);
         super.onActivityCreated(savedInstanceState);
     }
-
 }

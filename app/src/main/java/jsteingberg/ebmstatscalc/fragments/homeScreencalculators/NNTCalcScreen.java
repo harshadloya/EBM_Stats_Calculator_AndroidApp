@@ -1,4 +1,4 @@
-package jsteingberg.ebmstatscalc;
+package jsteingberg.ebmstatscalc.fragments.homeScreencalculators;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -20,9 +20,12 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import jsteingberg.ebmstatscalc.R;
+import jsteingberg.ebmstatscalc.fragments.FragmentStructure;
+import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.moreInfoFragments.NNTMoreInfoScreen;
 import jsteingberg.ebmstatscalc.util.HelperView;
 
-public class NNTCalcScreen extends Fragment
+public class NNTCalcScreen extends Fragment implements FragmentStructure
 {
     private Button moreInfoBtn;
     private ConstraintLayout nntParent;
@@ -45,58 +48,50 @@ public class NNTCalcScreen extends Fragment
         View view = inflater.inflate(R.layout.nntcalcscreen, container, false);
 
         initializeComponents(view);
-        setFilters();
-        assignListeners(view);
 
         NNTMoreInfoScreen nntMoreInfoScreen = new NNTMoreInfoScreen();
         HelperView helperView = new HelperView(nntMoreInfoScreen, getFragmentManager(), "replaceWithNNTMoreInfoScreen");
         moreInfoBtn.setOnClickListener(helperView.moreInfoBtnListener);
 
+        setFilters(helperView);
+        assignListeners(view);
+
         return view;
     }
 
-    /**
-     * Method where all components are initialized from the View
-     *
-     * @param view - View that has all the components
-     */
-    private void initializeComponents(View view) {
-        moreInfoBtn = (Button) view.findViewById(R.id.nnt_moreInfoBtn);
+    @Override
+    public void initializeComponents(View view) {
+        moreInfoBtn = view.findViewById(R.id.nnt_moreInfoBtn);
 
-        nntParent = (ConstraintLayout) view.findViewById(R.id.nnt_parent);
+        nntParent = view.findViewById(R.id.nnt_parent);
 
-        rateEditText1 = (EditText) view.findViewById(R.id.nnt_rateEdit1);
-        rateEditText2 = (EditText) view.findViewById(R.id.nnt_rateEdit2);
-        rateTextView3 = (TextView) view.findViewById(R.id.nnt_rateEdit3);
-        rateEditText4 = (EditText) view.findViewById(R.id.nnt_rateEdit4);
-        rateEditText5 = (EditText) view.findViewById(R.id.nnt_rateEdit5);
-        rateTextView6 = (TextView) view.findViewById(R.id.nnt_rateEdit6);
-        rateEditText7 = (EditText) view.findViewById(R.id.nnt_rateEdit7);
-        rateEditText8 = (EditText) view.findViewById(R.id.nnt_rateEdit8);
-        rateEditText9 = (EditText) view.findViewById(R.id.nnt_rateEdit9);
-        rateEditText10 = (EditText) view.findViewById(R.id.nnt_rateEdit10);
-        rateTextView11 = (TextView) view.findViewById(R.id.nnt_rateEdit11);
+        rateEditText1 = view.findViewById(R.id.nnt_rateEdit1);
+        rateEditText2 = view.findViewById(R.id.nnt_rateEdit2);
+        rateTextView3 = view.findViewById(R.id.nnt_rateEdit3);
+        rateEditText4 = view.findViewById(R.id.nnt_rateEdit4);
+        rateEditText5 = view.findViewById(R.id.nnt_rateEdit5);
+        rateTextView6 = view.findViewById(R.id.nnt_rateEdit6);
+        rateEditText7 = view.findViewById(R.id.nnt_rateEdit7);
+        rateEditText8 = view.findViewById(R.id.nnt_rateEdit8);
+        rateEditText9 = view.findViewById(R.id.nnt_rateEdit9);
+        rateEditText10 = view.findViewById(R.id.nnt_rateEdit10);
+        rateTextView11 = view.findViewById(R.id.nnt_rateEdit11);
     }
 
-    /**
-     * Method to set restrictions (if any needed) on components
-     */
-    private void setFilters() {
-        HelperView.setFiltersEditText_2Decimals(rateEditText1, "0.00", "1.00");
-        HelperView.setFiltersEditText_2Decimals(rateEditText2, "0.00", "1.00");
-        HelperView.setFiltersEditText(rateEditText4, "0", "100");
-        HelperView.setFiltersEditText(rateEditText5, "0", "100");
-        HelperView.setFiltersEditText(rateEditText7, "0", "100");
-        HelperView.setFiltersEditText(rateEditText8, "1", "100");
-        HelperView.setFiltersEditText(rateEditText9, "0", "100");
-        HelperView.setFiltersEditText(rateEditText10, "1", "100");
+    @Override
+    public void setFilters(HelperView helperView) {
+        helperView.setFiltersEditText_2Decimals(rateEditText1, "0.00", "1.00");
+        helperView.setFiltersEditText_2Decimals(rateEditText2, "0.00", "1.00");
+        helperView.setFiltersEditText(rateEditText4, "0", "100");
+        helperView.setFiltersEditText(rateEditText5, "0", "100");
+        helperView.setFiltersEditText(rateEditText7, "0", "100");
+        helperView.setFiltersEditText(rateEditText8, "1", "100");
+        helperView.setFiltersEditText(rateEditText9, "0", "100");
+        helperView.setFiltersEditText(rateEditText10, "1", "100");
     }
 
-    /**
-     * Method to assign listeners to components
-     * @param v - the view that may be needed for Recursion
-     */
-    private void assignListeners(View v) {
+    @Override
+    public void assignListeners(View v) {
         //rateEditText1.setOnFocusChangeListener(watcherFocusChangeListener);
         //for(EditText rateEditTexts: v)
         editTextsRecurseListeners((ViewGroup) v);

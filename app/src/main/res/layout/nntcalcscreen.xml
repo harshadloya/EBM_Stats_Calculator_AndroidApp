@@ -600,8 +600,8 @@
     <Button
         android:id="@+id/nnt_moreInfoBtn"
         android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
         android:text="@string/moreInfoButton"
         android:textColor="@color/mainScreenTabColor"
         android:textSize="18sp"

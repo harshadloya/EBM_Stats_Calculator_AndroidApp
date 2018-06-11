@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightBlueColor"
-    tools:context=".AboutAppScreen">
+    tools:context=".fragments.tabs.AboutAppScreen">
 
     <TextView
         android:id="@+id/aboutapp_heading"

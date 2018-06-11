@@ -28,12 +28,12 @@ public class HelperView
         }
     };
 
-    public static void setFiltersEditText(EditText editText, String min, String max)
+    public void setFiltersEditText(EditText editText, String min, String max)
     {
         editText.setFilters(new InputFilter[]{new InputFilterMinMax(min, max)});
     }
 
-    public static void setFiltersEditText_2Decimals(EditText editText, String min, String max)
+    public void setFiltersEditText_2Decimals(EditText editText, String min, String max)
     {
         editText.setFilters(new InputFilter[]{new InputFilterMinMax_2Decimals(min, max)});
     }

@@ -1,4 +1,4 @@
-package jsteingberg.ebmstatscalc;
+package jsteingberg.ebmstatscalc.fragments.tabs;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,24 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import jsteingberg.ebmstatscalc.R;
+
 /**
  * Created by hloya on 3/29/2017.
  */
 
-public class DisclaimerScreen extends Fragment {
+public class AboutAppScreen extends Fragment {
     private TextView mTextMessage;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.aboutapp_screen, container, false);
 
-        View view = inflater.inflate(R.layout.disclaimer_screen, container, false);
-
-        mTextMessage = (TextView) view.findViewById(R.id.message);
+        mTextMessage = view.findViewById(R.id.message);
         mTextMessage.setMovementMethod(new ScrollingMovementMethod());
-        mTextMessage.setText(R.string.disclaimerScreen_text);
+        mTextMessage.setText(R.string.aboutAppScreen_text);
 
         return view;
-
     }
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightBlueColor"
-    tools:context=".DisclaimerScreen">
+    tools:context=".fragments.tabs.DisclaimerScreen">
 
     <TextView
         android:id="@+id/disclaimer_heading"

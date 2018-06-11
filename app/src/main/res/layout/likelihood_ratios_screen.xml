@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,8 +9,9 @@
 <android.support.constraint.ConstraintLayout
     android:id="@+id/likelihoodcalc_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/lightBlueColor">
+    android:layout_height="wrap_content"
+    android:background="@color/lightBlueColor"
+    android:focusableInTouchMode="true">
 
     <TextView
         android:id="@+id/likelihood_preTestPercentLabel"
@@ -24,26 +24,26 @@
         android:textSize="18sp"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/likelihood_preTestPercentVal"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/likelihood_preTestPercentVal"
         android:layout_width="60dp"
         android:layout_height="30dp"
-        android:layout_marginStart="250dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="16dp"
+        android:layout_marginStart="250dp"
         android:background="@drawable/rectborder"
         android:ems="10"
+        android:gravity="center"
         android:hint="@string/DefaultValue_40.0"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:text="@string/DefaultValue_40.0"
-        android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:imeOptions="actionDone"
         app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toEndOf="@+id/likelihood_preTestPercentLabel"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/likelihood_preTestPercentLabel" />
 
     <SeekBar
         android:id="@+id/likelihood_probabilitySeekBar"
@@ -144,74 +144,52 @@
         android:background="@drawable/rectborder"
         android:ems="10"
         android:hint="@string/DefaultValue_2.0"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:text="@string/DefaultValue_2.0"
+        android:imeOptions="actionDone"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/likelihood_posRatioLabel"
         app:layout_constraintStart_toStartOf="@id/likelihood_preTestPercentVal"
         app:layout_constraintTop_toBottomOf="@+id/likelihood_probabilitySeekBar" />
 
-    <SeekBar
-        android:id="@+id/likelihood_posRatioSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="13dp"
-        android:max="100"
-        android:progress="20"
-        app:layout_constraintStart_toStartOf="@id/likelihood_probabilitySeekBar"
-        app:layout_constraintTop_toBottomOf="@+id/likelihood_posRatioLabel" />
-
     <TextView
         android:id="@+id/likelihood_negRatioLabel"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:text="@string/LikelihoodScreen_Lbl3"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@id/likelihood_posRatioLabel"
-        app:layout_constraintTop_toBottomOf="@+id/likelihood_posRatioSeekBar" />
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_posRatioLabel" />
 
     <EditText
         android:id="@+id/likelihood_negRatioVal"
         android:layout_width="60dp"
         android:layout_height="30dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="4dp"
         android:background="@drawable/rectborder"
         android:ems="10"
         android:hint="@string/DefaultValue_0.5"
-        android:inputType="number"
+        android:imeOptions="actionDone"
+        android:inputType="numberDecimal"
         android:text="@string/DefaultValue_0.5"
         android:textAlignment="center"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toEndOf="@+id/likelihood_negRatioLabel"
         app:layout_constraintStart_toStartOf="@id/likelihood_preTestPercentVal"
-        app:layout_constraintTop_toBottomOf="@+id/likelihood_posRatioSeekBar" />
-
-    <SeekBar
-        android:id="@+id/likelihood_negRatioSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="13dp"
-        android:max="100"
-        android:progress="5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/likelihood_negRatioLabel" />
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_posRatioVal" />
 
     <TextView
         android:id="@+id/likelihood_postTestProbabilityLabel"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="8dp"
         android:gravity="center"
+        android:layout_marginTop="32dp"
         android:text="@string/LikelihoodScreen_Lbl4"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/likelihood_negRatioSeekBar" />
+        app:layout_constraintTop_toBottomOf="@+id/likelihood_negRatioLabel" />
 
     <TextView
         android:id="@+id/likelihood_testPosLabel"
@@ -225,18 +203,17 @@
         app:layout_constraintStart_toStartOf="@id/likelihood_postTestProbabilityLabel"
         app:layout_constraintTop_toBottomOf="@+id/likelihood_postTestProbabilityLabel" />
 
-    <EditText
+    <TextView
         android:id="@+id/likelihood_testPosVal"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rectborder"
-        android:ems="10"
-        android:hint="@string/DefaultValue_Prob"
-        android:inputType="number"
         android:text="@string/DefaultValue_Prob"
-        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/blackColor"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/likelihood_testPosLabel"
@@ -255,18 +232,17 @@
         app:layout_constraintStart_toStartOf="@id/likelihood_postTestProbabilityLabel"
         app:layout_constraintTop_toBottomOf="@+id/likelihood_testPosLabel" />
 
-    <EditText
+    <TextView
         android:id="@+id/likelihood_testNegVal"
         android:layout_width="60dp"
         android:layout_height="30dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rectborder"
-        android:ems="10"
-        android:hint="@string/DefaultValue_Prob"
-        android:inputType="number"
         android:text="@string/DefaultValue_Prob"
-        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/blackColor"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toEndOf="@+id/likelihood_testNegLabel"
@@ -276,8 +252,8 @@
     <Button
         android:id="@+id/likelihood_moreInfoBtn"
         android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginTop="16dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/rectborder"
         android:text="@string/moreInfoButton"
         android:textColor="@color/mainScreenTabColor"

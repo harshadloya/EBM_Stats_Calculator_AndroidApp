@@ -1,4 +1,4 @@
-package jsteingberg.ebmstatscalc;
+package jsteingberg.ebmstatscalc.activity;
 
 import android.Manifest;
 import android.accounts.Account;
@@ -18,6 +18,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import jsteingberg.ebmstatscalc.R;
+import jsteingberg.ebmstatscalc.fragments.tabs.AboutAppScreen;
+import jsteingberg.ebmstatscalc.fragments.tabs.DisclaimerScreen;
+import jsteingberg.ebmstatscalc.fragments.tabs.HomeScreen;
+import jsteingberg.ebmstatscalc.fragments.tabs.MoreAppsScreen;
+import jsteingberg.ebmstatscalc.fragments.tabs.ReferencesScreen;
+import jsteingberg.ebmstatscalc.util.NavHeader;
 import jsteingberg.ebmstatscalc.util.UpdateScreen;
 
 public class MainActivity extends AppCompatActivity
@@ -31,20 +38,20 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(drawerOnNavigationItemSelectedListener);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_nav);
+        bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED)
@@ -111,7 +118,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -138,7 +145,7 @@ public class MainActivity extends AppCompatActivity
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item)
         {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
             return navigationFunctionality(item);
         }

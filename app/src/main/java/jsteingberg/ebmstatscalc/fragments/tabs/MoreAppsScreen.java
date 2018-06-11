@@ -1,4 +1,4 @@
-package jsteingberg.ebmstatscalc;
+package jsteingberg.ebmstatscalc.fragments.tabs;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import jsteingberg.ebmstatscalc.R;
 
 /**
  * Created by hloya on 3/29/2017.
@@ -22,7 +24,7 @@ public class MoreAppsScreen extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.moreapps_screen, container, false);
-        button = (Button) view.findViewById(R.id.moreAppsButton);
+        button = view.findViewById(R.id.moreApps_Button1);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -32,7 +34,7 @@ public class MoreAppsScreen extends Fragment {
             }
         });
 
-        button2 = (Button) view.findViewById(R.id.otherPlayStoreApps);
+        button2 = view.findViewById(R.id.moreApps_Button2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

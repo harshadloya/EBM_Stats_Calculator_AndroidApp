@@ -61,8 +61,12 @@
          (and they have plenty of NNT\'s too).</a>
     </string>
 
-
-    <string name="moreAppsScreen_text">Hello World</string>
+    <!-- More Apps Screen Texts -->
+    <string name="moreAppsScreen_title">"More apps for clinicians\nby Joshua Steinberg MD"</string>
+    <string name="moreAppsScreen_text">"I keep a list of apps* written by anyone (mostly others) which I recommend for clinicians, nurses, residents, and students serving many fields of medicine, especially my home of full-spectrum family medicine. A copy is always online here."</string>
+    <string name="moreAppsScreen_button">"More Apps List"</string>
+    <string name="moreAppsScreen_button2">"My Other Play Store Apps"</string>
+    <string name="moreAppsScreen_text2">"* I have no financial relationship or financial benefit from any of these apps, even my own."</string>
 
     <!-- Post-test Probability via Sensitivity and Specificity Calculator Screen-->
     <string name="SensSpecCalcScreen_PopuVal1">100</string>
