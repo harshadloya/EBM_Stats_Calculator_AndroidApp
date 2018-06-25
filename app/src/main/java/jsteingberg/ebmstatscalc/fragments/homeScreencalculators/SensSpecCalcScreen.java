@@ -21,6 +21,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import jsteingberg.ebmstatscalc.EBMCommunicator;
 import jsteingberg.ebmstatscalc.R;
 import jsteingberg.ebmstatscalc.fragments.FragmentStructure;
 import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.moreInfoFragments.PostTestMoreInfoScreen;
@@ -65,11 +66,13 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
         initializeComponents(view);
 
         PostTestMoreInfoScreen postTestMoreInfoScreen = new PostTestMoreInfoScreen();
-        HelperView helperView = new HelperView(postTestMoreInfoScreen, getFragmentManager(), "replaceWithSensSpecCalculatorScreen");
-        moreInfoBtn.setOnClickListener(helperView.moreInfoBtnListener);
+        HelperView helperView = new HelperView(postTestMoreInfoScreen, getFragmentManager(), "replaceWithSensSpecMoreInfoScreen", (AppCompatActivity) getActivity());
+        moreInfoBtn.setOnClickListener(helperView.BtnClickListener);
 
         setFilters(helperView);
         assignListeners(view);
+
+        ((EBMCommunicator) getActivity()).setDrawerState(false);
 
         return view;
     }
@@ -359,5 +362,11 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
     {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.actionbar_PostTestScreens);
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        ((EBMCommunicator) getActivity()).setDrawerState(true);
+        super.onDestroyView();
     }
 }

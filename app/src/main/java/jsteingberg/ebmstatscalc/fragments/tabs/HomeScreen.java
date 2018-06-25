@@ -34,7 +34,7 @@ public class HomeScreen extends Fragment {
             @Override
             public void onClick(View v) {
                 NNTCalcScreen nntCalcScreen = new NNTCalcScreen();
-                UpdateScreen.performScreenUpdateButtons(nntCalcScreen, getFragmentManager(), "replaceWithNNTCalculatorScreen");
+                UpdateScreen.performScreenUpdateButtons(nntCalcScreen, getFragmentManager(), "replaceWithNNTCalculatorScreen", ((AppCompatActivity) getActivity()));
             }
         });
 
@@ -43,7 +43,7 @@ public class HomeScreen extends Fragment {
             @Override
             public void onClick(View v) {
                 SensSpecCalcScreen sensSpecCalcScreen = new SensSpecCalcScreen();
-                UpdateScreen.performScreenUpdateButtons(sensSpecCalcScreen, getFragmentManager(), "replaceWithSensSpecCalculatorScreen");
+                UpdateScreen.performScreenUpdateButtons(sensSpecCalcScreen, getFragmentManager(), "replaceWithSensSpecCalculatorScreen", ((AppCompatActivity) getActivity()));
             }
         });
 
@@ -52,9 +52,13 @@ public class HomeScreen extends Fragment {
             @Override
             public void onClick(View v) {
                 LikelihoodRatiosCalcScreen likelihoodRatiosCalcScreen = new LikelihoodRatiosCalcScreen();
-                UpdateScreen.performScreenUpdateButtons(likelihoodRatiosCalcScreen, getFragmentManager(), "replaceWithLikelihoodRatiosCalculatorScreen");
+                UpdateScreen.performScreenUpdateButtons(likelihoodRatiosCalcScreen, getFragmentManager(), "replaceWithLikelihoodRatiosCalculatorScreen", ((AppCompatActivity) getActivity()));
             }
         });
+
+/*        LikelihoodRatiosCalcScreen likelihoodRatiosCalcScreen = new LikelihoodRatiosCalcScreen();
+        HelperView helperView = new HelperView(likelihoodRatiosCalcScreen, getFragmentManager(), "replaceWithLikelihoodRatiosCalculatorScreen", (AppCompatActivity) getActivity());
+        button3.setOnClickListener(helperView.BtnClickListener);*/
 
         return view;
     }

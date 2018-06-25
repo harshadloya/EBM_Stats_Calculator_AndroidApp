@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import jsteingberg.ebmstatscalc.EBMCommunicator;
 import jsteingberg.ebmstatscalc.R;
 
 public class NNTMoreInfoScreen extends Fragment
@@ -26,6 +27,8 @@ public class NNTMoreInfoScreen extends Fragment
         nntMoreInfoText.setMovementMethod(new ScrollingMovementMethod());
         nntMoreInfoText.setText(R.string.nnt_moreInfo_text);
 
+        ((EBMCommunicator) getActivity()).setDrawerState(false);
+
         return view;
     }
 
@@ -34,5 +37,11 @@ public class NNTMoreInfoScreen extends Fragment
     {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.actionbar_MoreInfoNNT);
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        ((EBMCommunicator) getActivity()).setDrawerState(true);
+        super.onDestroyView();
     }
 }

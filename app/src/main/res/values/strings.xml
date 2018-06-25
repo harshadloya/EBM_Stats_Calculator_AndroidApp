@@ -48,8 +48,11 @@
         \n\nDESIGN:  Joshua Steinberg MD (all me, no one else to blame).
         \n\nPROGRAMMING: Harshad Loya, MS Computer Science, Binghamton University, SUNY.
         \n\nVersion: 1.1    Build 1
-        \n\nCopyright: January, 2018
+        \n\nCopyright: June, 2018
         \n\nFeedback: jds.pocapps@gmail.com</string>
+
+    <string name="dashboard_name">Joshua Steinberg MD</string>
+    <string name="dashboard_email">jds.pocapps@gmail.com</string>
 
     <string name="refScreen_heading">References and Internet Links</string>
     <string name="refScreen_text">
@@ -114,6 +117,8 @@
     <string name="DefaultValue_PPV">PPV</string>
     <string name="DefaultValue_NPV">NPV</string>
     <string name="DefaultValue_Prob">prob</string>
+
+    <!--<string name="accountSelectionCancelledToast">"Default Name, Image and Email Id will be shown in Dashboard"</string>-->
 
     <string name="moreInfoButton">ⓘ more info</string>
 

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import java.util.Locale;
 
+import jsteingberg.ebmstatscalc.EBMCommunicator;
 import jsteingberg.ebmstatscalc.R;
 import jsteingberg.ebmstatscalc.fragments.FragmentStructure;
 import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.moreInfoFragments.NNTMoreInfoScreen;
@@ -41,23 +42,49 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
     private EditText rateEditText10;
     private TextView rateTextView11;
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
-    {
-        View view = inflater.inflate(R.layout.nntcalcscreen, container, false);
+    /**
+     * Text Change Watcher that listens to changes in the two percentages edittexts and sets the NNT value accordingly
+     */
+    private TextWatcher set2Watcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        initializeComponents(view);
+        }
 
-        NNTMoreInfoScreen nntMoreInfoScreen = new NNTMoreInfoScreen();
-        HelperView helperView = new HelperView(nntMoreInfoScreen, getFragmentManager(), "replaceWithNNTMoreInfoScreen");
-        moreInfoBtn.setOnClickListener(helperView.moreInfoBtnListener);
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-        setFilters(helperView);
-        assignListeners(view);
+            int changedValue;
 
-        return view;
-    }
+            int percentAge1 = 0;
+            int percentAge2 = 0;
+
+            double nnt;
+
+            if (!s.toString().equalsIgnoreCase(""))
+                changedValue = Integer.parseInt(s.toString());
+            else
+                changedValue = 0;
+
+            if (s.hashCode() == rateEditText4.getText().hashCode()) {
+                percentAge1 = changedValue;
+                percentAge2 = (int) getValue(rateEditText5);
+            } else if (s.hashCode() == rateEditText5.getText().hashCode()) {
+                percentAge1 = (int) getValue(rateEditText4);
+                percentAge2 = changedValue;
+            }
+
+            nnt = Math.abs(percentAge1 - percentAge2);
+            nnt = 1 / nnt;
+            nnt = nnt * 100;
+            rateTextView6.setText(String.format(Locale.getDefault(), "%.1f", nnt));
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
     @Override
     public void initializeComponents(View view) {
@@ -78,23 +105,35 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
         rateTextView11 = view.findViewById(R.id.nnt_rateEdit11);
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.nntcalcscreen, container, false);
+
+        initializeComponents(view);
+
+        NNTMoreInfoScreen nntMoreInfoScreen = new NNTMoreInfoScreen();
+        HelperView helperView = new HelperView(nntMoreInfoScreen, getFragmentManager(), "replaceWithNNTMoreInfoScreen", (AppCompatActivity) getActivity());
+        moreInfoBtn.setOnClickListener(helperView.BtnClickListener);
+
+        setFilters(helperView);
+        assignListeners(view);
+
+        ((EBMCommunicator) getActivity()).setDrawerState(false);
+
+        return view;
+    }
+
     @Override
     public void setFilters(HelperView helperView) {
         helperView.setFiltersEditText_2Decimals(rateEditText1, "0.00", "1.00");
         helperView.setFiltersEditText_2Decimals(rateEditText2, "0.00", "1.00");
         helperView.setFiltersEditText(rateEditText4, "0", "100");
         helperView.setFiltersEditText(rateEditText5, "0", "100");
-        helperView.setFiltersEditText(rateEditText7, "0", "100");
-        helperView.setFiltersEditText(rateEditText8, "1", "100");
-        helperView.setFiltersEditText(rateEditText9, "0", "100");
-        helperView.setFiltersEditText(rateEditText10, "1", "100");
-    }
-
-    @Override
-    public void assignListeners(View v) {
-        //rateEditText1.setOnFocusChangeListener(watcherFocusChangeListener);
-        //for(EditText rateEditTexts: v)
-        editTextsRecurseListeners((ViewGroup) v);
+        helperView.setFiltersEditText(rateEditText7, "0", "9999");
+        helperView.setFiltersEditText(rateEditText8, "1", "9999");
+        helperView.setFiltersEditText(rateEditText9, "0", "9999");
+        helperView.setFiltersEditText(rateEditText10, "1", "9999");
     }
 
     /**
@@ -211,49 +250,13 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
             return 0.0;
     }
 
-    /**
-     * Text Change Watcher that listens to changes in the two percentages edittexts and sets the NNT value accordingly
-     */
-    private TextWatcher set2Watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    @Override
+    public void assignListeners(View v) {
+        //rateEditText1.setOnFocusChangeListener(watcherFocusChangeListener);
+        //for(EditText rateEditTexts: v)
+        editTextsRecurseListeners((ViewGroup) v);
 
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            int changedValue;
-
-            int percentAge1 = 0;
-            int percentAge2 = 0;
-
-            double nnt;
-
-            if(!s.toString().equalsIgnoreCase(""))
-                changedValue = Integer.parseInt(s.toString());
-            else
-                changedValue = 0;
-
-            if(s.hashCode() == rateEditText4.getText().hashCode()) {
-                percentAge1 = changedValue;
-                percentAge2 = (int) getValue(rateEditText5);
-            } else if(s.hashCode() == rateEditText5.getText().hashCode()) {
-                percentAge1 = (int) getValue(rateEditText4);
-                percentAge2 = changedValue;
-            }
-
-            nnt = Math.abs(percentAge1 - percentAge2);
-            nnt = 1 / nnt;
-
-            rateTextView6.setText(String.format(Locale.getDefault(), "%.1f", nnt));
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
+    }
 
     /**
      * Text Change Watcher that listens to changes in the number of events and patients edittexts and sets the NNT value accordingly
@@ -342,5 +345,11 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.actionbar_NNTScreen);
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        ((EBMCommunicator) getActivity()).setDrawerState(true);
+        super.onDestroyView();
     }
 }

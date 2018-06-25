@@ -1,38 +1,35 @@
 package jsteingberg.ebmstatscalc.activity;
 
-import android.Manifest;
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
+import jsteingberg.ebmstatscalc.EBMCommunicator;
 import jsteingberg.ebmstatscalc.R;
 import jsteingberg.ebmstatscalc.fragments.tabs.AboutAppScreen;
 import jsteingberg.ebmstatscalc.fragments.tabs.DisclaimerScreen;
 import jsteingberg.ebmstatscalc.fragments.tabs.HomeScreen;
 import jsteingberg.ebmstatscalc.fragments.tabs.MoreAppsScreen;
 import jsteingberg.ebmstatscalc.fragments.tabs.ReferencesScreen;
-import jsteingberg.ebmstatscalc.util.NavHeader;
 import jsteingberg.ebmstatscalc.util.UpdateScreen;
 
-public class MainActivity extends AppCompatActivity
-{
-    private static final int MY_PERMISSIONS_REQUEST_GET_ACCOUNTS = 5555;
+public class MainActivity extends AppCompatActivity implements EBMCommunicator {
+    //private static final int MY_PERMISSIONS_REQUEST_GET_ACCOUNTS = 5555;
+    //private static final int REQUEST_CODE_PICK_ACCOUNT = 5005;
     private  NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
+    private ActionBarDrawerToggle drawerToggle;
+    private DrawerLayout drawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +37,13 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+
+        drawer = findViewById(R.id.drawer_layout);
+        drawerToggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+        drawer.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(drawerOnNavigationItemSelectedListener);
@@ -54,7 +51,7 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED)
+        /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.GET_ACCOUNTS) != PackageManager.PERMISSION_GRANTED)
         {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.GET_ACCOUNTS))
             {
@@ -68,13 +65,15 @@ public class MainActivity extends AppCompatActivity
                 // No explanation needed, we can request the permission.
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.GET_ACCOUNTS}, MY_PERMISSIONS_REQUEST_GET_ACCOUNTS);
             }
-        }
+        }*/
 
-        getDetailsForDrawer(navigationView);
+        //getDetailsForDrawer(navigationView);
         updateUI(new HomeScreen(), R.color.mainScreenTabColor);
         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
     }
 
+/*
+    Removing Intended Functionality as it goes beyond the need and scope of project
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
@@ -87,7 +86,8 @@ public class MainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    //set default img name n email id
+                    Toast.makeText(this, R.string.accountSelectionCancelledToast, Toast.LENGTH_LONG).show();
+                    //default img, name and email id will be displayed
                 }
                 break;
         }
@@ -95,21 +95,31 @@ public class MainActivity extends AppCompatActivity
 
     private  void getDetailsForDrawer(NavigationView navigationView)
     {
-        //AccountManager manager = (AccountManager) getSystemService(ACCOUNT_SERVICE);
-        //Account[] list = manager.getAccounts();
-        Account[] list = AccountManager.get(this).getAccounts();
-        String gmail = null;
+        Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"},
+                false, null, null, null, null);
+        startActivityForResult(intent, REQUEST_CODE_PICK_ACCOUNT);
+    }
 
-        for (Account account : list) {
-            if (account.type.equalsIgnoreCase("com.google")) {
-                gmail = account.name;
-                break;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == REQUEST_CODE_PICK_ACCOUNT)
+        {
+            // Receiving a result from the AccountPicker
+            if (resultCode == RESULT_OK)
+            {
+                Account[] account = AccountManager.get(this).getAccountsByType("com.google");
+
+                NavHeader nv = new NavHeader();
+                nv.setProfileInDrawer(navigationView.getHeaderView(0), data);
+
+            }
+            else if (resultCode == RESULT_CANCELED)
+            {
+                Toast.makeText(this, R.string.accountSelectionCancelledToast, Toast.LENGTH_LONG).show();
             }
         }
-
-        NavHeader nv = new NavHeader();
-        //nv.setProfileInDrawer(navigationView.getHeaderView(0));
-    }
+    }*/
 
     @Override
     protected void onStart() {
@@ -121,8 +131,29 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    public void setDrawerState(boolean isEnabled) {
+        if (isEnabled) {
+            drawerToggle.setDrawerIndicatorEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            drawerToggle.syncState();
+        } else {
+            drawerToggle.setDrawerIndicatorEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    onBackPressed();
+                }
+            });
+            drawerToggle.syncState();
         }
     }
 
@@ -150,13 +181,6 @@ public class MainActivity extends AppCompatActivity
             return navigationFunctionality(item);
         }
     };
-
-    private void updateUI(Fragment fragment, int menuColor)
-    {
-        UpdateScreen.performScreenUpdateTabs(fragment, getSupportFragmentManager());
-        navigationView.setBackgroundColor(getResources().getColor(menuColor));
-        bottomNavigationView.setBackgroundColor(getResources().getColor(menuColor));
-    }
 
     private boolean navigationFunctionality(MenuItem item)
     {
@@ -237,4 +261,10 @@ public class MainActivity extends AppCompatActivity
             return navigationFunctionality(item);
         }
     };
+
+    private void updateUI(Fragment fragment, int menuColor) {
+        UpdateScreen.performScreenUpdateTabs(fragment, getSupportFragmentManager());
+        navigationView.setBackgroundColor(getResources().getColor(menuColor));
+        bottomNavigationView.setBackgroundColor(getResources().getColor(menuColor));
+    }
 }

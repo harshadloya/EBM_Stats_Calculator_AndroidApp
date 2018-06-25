@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import jsteingberg.ebmstatscalc.EBMCommunicator;
 import jsteingberg.ebmstatscalc.R;
 
 public class PostTestMoreInfoScreen extends Fragment
@@ -26,6 +27,8 @@ public class PostTestMoreInfoScreen extends Fragment
         postTestMoreInfoText.setMovementMethod(new ScrollingMovementMethod());
         postTestMoreInfoText.setText(R.string.postTest_moreInfo_text);
 
+        ((EBMCommunicator) getActivity()).setDrawerState(false);
+
         return view;
     }
 
@@ -34,5 +37,11 @@ public class PostTestMoreInfoScreen extends Fragment
     {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.actionbar_MoreInfoPostTest);
         super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    public void onDestroyView() {
+        ((EBMCommunicator) getActivity()).setDrawerState(true);
+        super.onDestroyView();
     }
 }

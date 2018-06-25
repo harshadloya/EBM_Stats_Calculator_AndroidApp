@@ -3,6 +3,7 @@ package jsteingberg.ebmstatscalc.util;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import jsteingberg.ebmstatscalc.R;
 
@@ -28,7 +29,7 @@ public class UpdateScreen
      * @param fragmentManager - fragment manager needed to perform the update
      * @param backStackStateName - name of the fragment being added to the stack
      */
-    public static void performScreenUpdateButtons(Fragment fragment, FragmentManager fragmentManager, String backStackStateName)
+    public static void performScreenUpdateButtons(Fragment fragment, FragmentManager fragmentManager, String backStackStateName, AppCompatActivity activity)
     {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.contentFrag, fragment);
