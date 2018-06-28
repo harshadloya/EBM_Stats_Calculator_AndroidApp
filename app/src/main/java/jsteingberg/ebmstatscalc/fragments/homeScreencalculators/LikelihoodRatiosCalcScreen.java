@@ -90,7 +90,7 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
 
         updateFieldsIfNeeded();
 
-        ((EBMCommunicator) getActivity()).setDrawerState(false);
+        ((EBMCommunicator) getActivity()).setDrawerState(false, false);
 
         return view;
     }
@@ -279,7 +279,7 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
 
     @Override
     public void onDestroyView() {
-        ((EBMCommunicator) getActivity()).setDrawerState(true);
+        ((EBMCommunicator) getActivity()).setDrawerState(true, true);
         super.onDestroyView();
     }
 

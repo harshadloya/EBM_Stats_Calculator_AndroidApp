@@ -20,17 +20,24 @@
     <string name="title_moreApps">More Apps</string>
 
     <string name="actionbar_HomeScreen">EBM Stats Calculators</string>
+    <string name="actionbar_DisclaimerScreen">Disclaimer</string>
+    <string name="actionbar_AboutAppScreen">Development of EBM Stats Calc App</string>
+    <string name="actionbar_ReferencesScreen">References and Internet Links</string>
+    <string name="actionbar_MoreAppScreen">More Apps for Clinicians</string>
     <string name="actionbar_NNTScreen">Number Needed to Treat</string>
     <string name="actionbar_MoreInfoNNT">about NNT</string>
     <string name="actionbar_PostTestScreens">Diagnosis</string>
     <string name="actionbar_MoreInfoPostTest">about Diagnosis</string>
+
+    <string name="dashboard_name">Joshua Steinberg MD</string>
+    <string name="dashboard_email">jds.pocapps@gmail.com</string>
 
     <string name="home_screen_heading">Choose a calculator you wish to use</string>
     <string name="home_screen_button1">NNT from Rates or Events</string>
     <string name="home_screen_button2">Post-test Prob via Sens &amp; Spec</string>
     <string name="home_screen_button3">Post-test Prob via Likelihood Ratios</string>
 
-    <string name="home_screen_belowButton1">Number Need to Treat (or harm or screen)</string>
+    <string name="home_screen_belowButton1">Supply rates or raw events and patients</string>
     <string name="home_screen_belowButton2">Supply pre-test probability, Sens, Spec</string>
     <string name="home_screen_belowButton3">Supply pre-test probability, LR+, LR-</string>
 
@@ -46,7 +53,7 @@
         The app does not make medical decisions for you on diagnosis or treatment, it just helps you think quantitatively, helping you with the math.
         The app is merely a quick reference and tool for material you already know.</string>
 
-    <string name="aboutAppScreen_heading">Development of EBM Stats Calc App</string>
+
     <string name="aboutAppScreen_text">Written to put basic yet dynamic tools for quantitative reasoning in diagnosis and treatment in the hands of clinicians,
         students, residents, and especially educators at the point of care.
         \n\nCONTENT:  Joshua Steinberg MD, UHS Wilson Family Medicine Residency, Binghamton NY, and Daniel Kaufman MS-3,
@@ -57,10 +64,6 @@
         \n\nCopyright: June, 2018
         \n\nFeedback: jds.pocapps@gmail.com</string>
 
-    <string name="dashboard_name">Joshua Steinberg MD</string>
-    <string name="dashboard_email">jds.pocapps@gmail.com</string>
-
-    <string name="refScreen_heading">References and Internet Links</string>
     <string name="refScreen_text">
         \n<a href="https://books.google.com/books/about/Evidence_based_Medicine.html?id=oIJrAAAAMAAJ">Evidence-Based Medicine, How to Practice
             and Teach EBM, 2nd Ed. Sackett DL, et. al., Churchhill Livingstone, Edinburgh, 2000.</a>
@@ -71,7 +74,7 @@
     </string>
 
     <!-- More Apps Screen Texts -->
-    <string name="moreAppsScreen_title">"More apps for clinicians\nby Joshua Steinberg MD"</string>
+    <string name="moreAppsScreen_title">"by Joshua Steinberg MD"</string>
     <string name="moreAppsScreen_text">"I keep a list of apps* written by anyone (mostly others) which I recommend for clinicians, nurses, residents, and students serving many fields of medicine, especially my home of full-spectrum family medicine. A copy is always online here."</string>
     <string name="moreAppsScreen_button">"More Apps List"</string>
     <string name="moreAppsScreen_button2">"My Other Play Store Apps"</string>

@@ -25,7 +25,7 @@ public class NNTMoreInfoScreen extends Fragment
         nntMoreInfoText = view.findViewById(R.id.nnt_moreInfo_text);
         nntMoreInfoText.setText(R.string.nnt_moreInfo_text);
 
-        ((EBMCommunicator) getActivity()).setDrawerState(false);
+        ((EBMCommunicator) getActivity()).setDrawerState(false, false);
 
         return view;
     }
@@ -39,7 +39,7 @@ public class NNTMoreInfoScreen extends Fragment
 
     @Override
     public void onDestroyView() {
-        ((EBMCommunicator) getActivity()).setDrawerState(true);
+        ((EBMCommunicator) getActivity()).setDrawerState(true, true);
         super.onDestroyView();
     }
 }

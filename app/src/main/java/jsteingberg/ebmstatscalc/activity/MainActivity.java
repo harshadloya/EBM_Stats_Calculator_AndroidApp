@@ -182,12 +182,13 @@ public class MainActivity extends AppCompatActivity implements EBMCommunicator, 
         }
     }
 
-    public void setDrawerState(boolean isEnabled) {
+    @Override
+    public void setDrawerState(boolean isEnabled, boolean tab) {
         if (isEnabled) {
             drawerToggle.setDrawerIndicatorEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
             drawerToggle.syncState();
-        } else {
+        } else if (!tab) {
             drawerToggle.setDrawerIndicatorEnabled(false);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             drawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
@@ -198,6 +199,8 @@ public class MainActivity extends AppCompatActivity implements EBMCommunicator, 
                 }
             });
             drawerToggle.syncState();
+        } else {
+            drawerToggle.setDrawerIndicatorEnabled(false);
         }
     }
 

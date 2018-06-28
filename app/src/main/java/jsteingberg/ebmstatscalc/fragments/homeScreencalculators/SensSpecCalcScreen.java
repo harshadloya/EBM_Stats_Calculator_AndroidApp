@@ -87,7 +87,7 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
 
         updateFieldsIfNeeded();
 
-        ((EBMCommunicator) getActivity()).setDrawerState(false);
+        ((EBMCommunicator) getActivity()).setDrawerState(false, false);
 
         return view;
     }
@@ -395,7 +395,7 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
 
     @Override
     public void onDestroyView() {
-        ((EBMCommunicator) getActivity()).setDrawerState(true);
+        ((EBMCommunicator) getActivity()).setDrawerState(true, true);
         super.onDestroyView();
     }
 
