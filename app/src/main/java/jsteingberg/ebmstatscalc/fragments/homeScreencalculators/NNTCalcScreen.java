@@ -231,7 +231,7 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
 
             double nnt;
 
-            if(!s.toString().equalsIgnoreCase(""))
+            if (s.length() > 0 && !s.toString().equals("."))
                 changedValue = Double.parseDouble(s.toString());
             else
                 changedValue = 0.0;

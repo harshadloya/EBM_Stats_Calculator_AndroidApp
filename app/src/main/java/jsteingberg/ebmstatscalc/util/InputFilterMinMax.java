@@ -32,7 +32,11 @@ public class InputFilterMinMax implements InputFilter {
             if (decimalPosition != -1 && newVal.substring(decimalPosition + 1).length() > 1)
                 return "";
 
-            double input = Double.parseDouble(newVal);
+            double input = 0.0;
+            if (!newVal.equals(".")) {
+                input = Double.parseDouble(newVal);
+            }
+
             if (isInRange(min, max, input))
                 return null;
         } catch (NumberFormatException nfe) {
