@@ -3,7 +3,6 @@ package jsteingberg.ebmstatscalc.fragments.tabs;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,7 @@ public class DisclaimerScreen extends Fragment {
 
         View view = inflater.inflate(R.layout.disclaimer_screen, container, false);
 
-        mTextMessage = view.findViewById(R.id.message);
-        mTextMessage.setMovementMethod(new ScrollingMovementMethod());
+        mTextMessage = view.findViewById(R.id.disclaimer_message);
         mTextMessage.setText(R.string.disclaimerScreen_text);
 
         return view;

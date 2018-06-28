@@ -6,6 +6,12 @@
 
     <string name="action_settings">Settings</string>
 
+    <string name="mainScreenAlertTitle">Welcome</string>
+    <string name="mainScreenAlertMessage">EBM Stats Calc helps clinicians and educators do clinical reasoning a little bit easier and more effectively
+    by helping you \'do the math\' that everyone hates. The app will (1) calculate NNT\'s from event rates, (2) calculate Post-test Probability from Sensitivity,
+    Specificity, LR+ and LR-, and (3) demonstrate diagnostic principles to learners dynamically.</string>
+    <string name="mainScreenAlertBtnName">Get Started</string>
+
 
     <string name="title_home">Home</string>
     <string name="title_disclaimer">Disclaimer</string>
@@ -118,6 +124,10 @@
     <string name="DefaultValue_NPV">NPV</string>
     <string name="DefaultValue_Prob">prob</string>
 
+    <string name="nnt_preference_file_key">EBMStatsCalc_NNT_SharedPreferences</string>
+    <string name="sensspec_preference_file_key">EBMStatsCalc_SensSpec_SharedPreferences</string>
+    <string name="likelihood_preference_file_key">EBMStatsCalc_Likelihood_SharedPreferences</string>
+
     <!--<string name="accountSelectionCancelledToast">"Default Name, Image and Email Id will be shown in Dashboard"</string>-->
 
     <string name="moreInfoButton">ⓘ more info</string>
@@ -158,9 +168,13 @@
         A study comparing Treatment A to Treatment B might show A statistically significantly superior via a p-value or a 95% confidence interval.
         But is the statistically significantly superior treatment also clinically significantly superior?  NNT is a great way to estimate the magnitude of
         benefit, and quantify how much better one approach is compared to an alternative.  NNT is how many patients must be treated with Treatment A
-        rather than Treatment B (or placebo or no treatment at all) in order to change one patient’s outcome.
-        \n\nFor example, let’s say a study reports on two randomized groups of 100 people each, one group taking a statin medication, the other taking placebo.
-        \n\nOver perhaps 5 years of treatment, 10 patients in the placebo control group have a heart attack, yielding a risk in the control group is 10/100, or 10%. In the statin group, just 7 heart attacks occur, for an risk of 7/100, or 7%.  The statin didn’t stop every heart attack as 7 still occurred.  And most patients didn’t benefit from the statin, as 90 had no heart attack regardless of treatment.  But 3 outcomes were changed – 3 heart attacks were prevented by taking statin rather than placebo.  It took 100 patients treated with statin rather than placebo to save these 3 heart attacks.  So it took appx. 33 patients treated in order to save every 1 heart attack.  NNT of 33.
+        rather than Treatment B (or placebo or no treatment at all) in order to change one patient\'s outcome.
+        \n\nFor example, let\'s say a study reports on two randomized groups of 100 people each, one group taking a statin medication, the other taking placebo.
+        \n\nOver perhaps 5 years of treatment, 10 patients in the placebo control group have a heart attack, yielding a risk in the control group is 10/100, or 10%.
+        In the statin group, just 7 heart attacks occur, for an risk of 7/100, or 7%.  The statin didn\'t stop every heart attack as 7 still occurred.
+        And most patients didn\'t benefit from the statin, as 90 had no heart attack regardless of treatment.
+        But 3 outcomes were changed – 3 heart attacks were prevented by taking statin rather than placebo. It took 100 patients treated with
+        statin rather than placebo to save these 3 heart attacks. So it took appx. 33 patients treated in order to save every 1 heart attack. \nNNT of 33.
         \n\nThe formula for NNT is the inverse of the absolute risk reduction, or...
         \n\nNNT = 1 ÷ (Risk1 – Risk2)
         \n\nNNT can be used to quantify the magnitude of benefit for any intervention, including standard things like a medication or surgery, and also for
@@ -168,13 +182,13 @@
 
     <!-- Sens Spec and Likelihood More Info Screen-->
     <string name="postTest_moreInfo_text">Why do we physicians use diagnostic tests?  Because we want to wind up more convinced about whether a
-        patient has a disease.  Let’s say you think to yourself, “hmmm, I think the chance this child has Strep Throat is appx 40%, but I’d like to be more
-        convinced one way or the other.”  We start out with a certain level of suspicion and hope that a positive diagnostic test will move our suspicion of
+        patient has a disease.  Let\'s say you think to yourself, \“hmmm, I think the chance this child has Strep Throat is appx 40%, but I\'d like to be more
+        convinced one way or the other.\”  We start out with a certain level of suspicion and hope that a positive diagnostic test will move our suspicion of
         the disease upwards much closer to certainty, and likewise we hope that a negative diagnostic test will move our suspicion downwards also towards
         certainty.  Usually we do this kind of thinking in our heads in a qualitative way.  On occasion, you may wish to be quantitative, do the math, and
-        consider the numbers.  That may be why you have this app.  Here is a brief educational review of terms and concepts.
+        consider the numbers. That may be why you have this app. Here is a brief educational review of terms and concepts.
 
-        \n\nSensitivity is the ability of a test to correctly identify disease in a population who has the disease.  For example, if you have 100 patients with
+        \n\nSensitivity is the ability of a test to correctly identify disease in a population who has the disease. For example, if you have 100 patients with
         the STD chlamydia and your test can find it in 94 of them and miss it in 6, the sensitivity is 94%, or...
 
         \n\nSens  = TruePositives ÷ (TruePositives + FalseNegatives)
@@ -182,7 +196,7 @@
         \n\nA highly sensitive test will identify nearly everyone with the disease, which sounds good, but it may also label patients without the disease as
         having the disease, too, which brings us to Specificity.
 
-        \n\nSpecificity is the ability of a test to correctly identify not having a disease in a population which does not have the disease.  Using the same
+        \n\nSpecificity is the ability of a test to correctly identify not having a disease in a population which does not have the disease. Using the same
         kind of example as above, if you have 100 patients who do not have the STD chlamydia and your test can correctly identify 97 of them as not having
         the disease and mislabel only 3 as having it, the specificity is 97%, or...
 
@@ -193,14 +207,14 @@
 
         \n\nThe problem for clinicians, however, is that we never run tests on 100 patients whom we know to have a disease nor do we run tests on
         100 patients whom we know not to have a disease.  We start with patients, or more likely a single patient, who may or may not have a disease, and
-        we hope a test can move us from uncertainty towards enough certainty to let us get on with treating the patient with some confidence that we’re
+        we hope a test can move us from uncertainty towards enough certainty to let us get on with treating the patient with some confidence that we\'re
         doing the right thing.
 
-        \n\nA physician’s initial impression of the chance of disease is called the Pretest Probability.  This initial level of suspicion could come from
+        \n\nA physician\'s initial impression of the chance of disease is called the Pretest Probability.  This initial level of suspicion could come from
         careful history and physical or perhaps it could come from baseline rates of a disease in a population (prevalence).  The calculator in this app
         shows you a 2x2 table starting with a pretest probability (which you can enter as a number or via the slider), a population size (100, 1000, or 10,000
-        to make the numbers big easy and round), and sensitivity and specificity you enter.   The 2x2 table shows you how many total people will test
-        positive, and of those, how many will also have the disease.  This is positive predictive value (PPV), or the chance that a positive test is likely
+        to make the numbers big easy and round), and sensitivity and specificity you enter. The 2x2 table shows you how many total people will test
+        positive, and of those, how many will also have the disease. This is positive predictive value (PPV), or the chance that a positive test is likely
         to be true.
 
         \n\nPPV  = TruePositives ÷ TotalPositives
@@ -224,20 +238,20 @@
         \nLR–  = (1 – sensitivity) ÷ specificity
 
         \n\nThe larger the LR+, the greater it pushes post-test probability upward towards certainty of disease.  A LR+ of 2 mildly moves up pretest
-        probability to posttest probability.  An LR+ of 5 moves it a good deal more.  And an LR+ of 10 or more powerfully moves the posttest probability
+        probability to post-test probability.  An LR+ of 5 moves it a good deal more.  And an LR+ of 10 or more powerfully moves the posttest probability
         upward, all of which you can see with the LR calculator and pretest probability slider.  Conversely, the smaller the LR–, the more it pushes
         post-test probability towards certainty of the absence of disease.  An LR– of 0.5 modestly moves down suspicion of disease, whereas an LR– of
         0.2 moves it a good deal more, and an LR– 0.1 or less powerfully moves the posttest probability downward, which again can all nicely be seen by
         playing with numbers in the calculator.  Just like sensitivity and specificity, likelihood ratios are characteristics of a test itself and are
-        prevalence-independent, which is to say they’re unaffected by how common or rare the disease is.  PPV and NPV are prevalence-dependent.
+        prevalence-independent, which is to say they\'re unaffected by how common or rare the disease is.  PPV and NPV are prevalence-dependent.
 
         \n\nThere is an equation for how to derive posttest probability from pretest probability and likelihood ratio, but it is so dreadfully long that it
-        won’t read nicely in this small screen discussion, and it’s not like you’re gonna get out pencil and paper to do some calculations by hand (that’s
+        won\'t read nicely in this small screen discussion, and it\'s not like you\'re gonna get out pencil and paper to do some calculations by hand (that\'s
         what this app is for).  If you really want the formula, you can find it at the Oxford Center for Evidence Based Medicine website cited in the app
-        References tab (actually you’ll find a set of formulas to convert pretest probability to pretest odds, then do the LR math on odds, then convert the
+        References tab (actually you\'ll find a set of formulas to convert pretest probability to pretest odds, then do the LR math on odds, then convert the
         posttest odds back to posttest probability).
 
-        \n\nIf you would like to play with LR+ and LR- actual numbers from all across the breadth of medical practice, a nifty collection of LR's await
+        \n\nIf you would like to play with LR+ and LR- actual numbers from all across the breadth of medical practice, a nifty collection of LR\'s await
         you at the great site theNNT.com, and there is a direct link there in the References section of this app.</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package jsteingberg.ebmstatscalc.fragments.homeScreencalculators;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -21,11 +22,15 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
+import java.util.Locale;
+
 import jsteingberg.ebmstatscalc.EBMCommunicator;
 import jsteingberg.ebmstatscalc.R;
 import jsteingberg.ebmstatscalc.fragments.FragmentStructure;
 import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.moreInfoFragments.PostTestMoreInfoScreen;
-import jsteingberg.ebmstatscalc.util.HelperView;
+import jsteingberg.ebmstatscalc.util.UpdateScreen;
+
+import static jsteingberg.ebmstatscalc.util.HelperView.setFiltersEditText;
 
 public class SensSpecCalcScreen extends Fragment implements FragmentStructure
 {
@@ -55,7 +60,19 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
     private TextView postTestPos;
     private TextView postTestNeg;
 
+    private SharedPreferences sharedPreferences;
+    private View.OnClickListener BtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            sharedPreferences.edit().putString("Check", "True").commit();
+            sharedPreferences.edit().putString("Pretest", preTestPercent.getText().toString()).commit();
+            sharedPreferences.edit().putString("Sensitivity", sensitivityPercent.getText().toString()).commit();
+            sharedPreferences.edit().putString("Specificity", specificityPercent.getText().toString()).commit();
 
+            PostTestMoreInfoScreen postTestMoreInfoScreen = new PostTestMoreInfoScreen();
+            UpdateScreen.performScreenUpdateButtons(postTestMoreInfoScreen, getFragmentManager(), "replaceWithSensSpecMoreInfoScreen", (AppCompatActivity) getActivity());
+        }
+    };
 
     @Nullable
     @Override
@@ -65,16 +82,27 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
 
         initializeComponents(view);
 
-        PostTestMoreInfoScreen postTestMoreInfoScreen = new PostTestMoreInfoScreen();
-        HelperView helperView = new HelperView(postTestMoreInfoScreen, getFragmentManager(), "replaceWithSensSpecMoreInfoScreen", (AppCompatActivity) getActivity());
-        moreInfoBtn.setOnClickListener(helperView.BtnClickListener);
-
-        setFilters(helperView);
+        setFilters();
         assignListeners(view);
+
+        updateFieldsIfNeeded();
 
         ((EBMCommunicator) getActivity()).setDrawerState(false);
 
         return view;
+    }
+
+    private void updateFieldsIfNeeded() {
+
+        String check = sharedPreferences.getString("Check", "");
+        if (!check.equalsIgnoreCase("")) {
+            preTestPercent.setText(sharedPreferences.getString("Pretest", ""));
+            sensitivityPercent.setText(sharedPreferences.getString("Sensitivity", ""));
+            specificityPercent.setText(sharedPreferences.getString("Specificity", ""));
+
+            updateAllFields();
+            sharedPreferences.edit().clear().apply();
+        }
     }
 
     @Override
@@ -108,6 +136,8 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
         nPV = view.findViewById(R.id.sensspec_negPredictivePercentVal);
         postTestPos = view.findViewById(R.id.sensspec_posPostTestProbPercentVal);
         postTestNeg = view.findViewById(R.id.sensspec_negPostTestProbPercentVal);
+
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.sensspec_preference_file_key), Context.MODE_PRIVATE);
     }
 
     @Override
@@ -127,14 +157,8 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
         sensitivityPercent.setOnEditorActionListener(onEditorActionListener);
         specificityPercent.setOnFocusChangeListener(sensSpecOnFocusChangeListener);
         specificityPercent.setOnEditorActionListener(onEditorActionListener);
-    }
 
-    @Override
-    public void setFilters(HelperView helperView)
-    {
-        helperView.setFiltersEditText(preTestPercent, "0.0", "100.0");
-        helperView.setFiltersEditText(sensitivityPercent, "0.0", "100.0");
-        helperView.setFiltersEditText(specificityPercent, "0.0", "100.0");
+        moreInfoBtn.setOnClickListener(BtnClickListener);
     }
 
     private View.OnFocusChangeListener preTestOnFocusChangeListener = new View.OnFocusChangeListener()
@@ -252,6 +276,13 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
         }
     };
 
+    @Override
+    public void setFilters() {
+        setFiltersEditText(preTestPercent, "0.0", "100.0");
+        setFiltersEditText(sensitivityPercent, "0.0", "100.0");
+        setFiltersEditText(specificityPercent, "0.0", "100.0");
+    }
+
     private void updateAllFields() {
         double populationVal = 0.0;
 
@@ -273,14 +304,12 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
 
         if (popuToggleButton1.isChecked()) {
             populationVal = Double.parseDouble(popuToggleButton1.getText().toString());
-            total.setText("" + populationVal);
         } else if (popuToggleButton2.isChecked()) {
             populationVal = Double.parseDouble(popuToggleButton2.getText().toString().replaceAll(",", ""));
-            total.setText("" + populationVal);
         } else if (popuToggleButton3.isChecked()) {
             populationVal = Double.parseDouble(popuToggleButton3.getText().toString().replaceAll(",", ""));
-            total.setText("" + populationVal);
         }
+        total.setText(String.format(Locale.getDefault(), "%.1f", populationVal));
 
         double preTestVal = 0.0;
         double sensitivityVal = 0.0;
@@ -368,5 +397,30 @@ public class SensSpecCalcScreen extends Fragment implements FragmentStructure
     public void onDestroyView() {
         ((EBMCommunicator) getActivity()).setDrawerState(true);
         super.onDestroyView();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        if (outState != null) {
+            outState.putString("Pretest", preTestPercent.getText().toString());
+            outState.putString("Sensitivity", sensitivityPercent.getText().toString());
+            outState.putString("Specificity", specificityPercent.getText().toString());
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+            preTestPercent.setText(savedInstanceState.getString("Pretest"));
+            sensitivityPercent.setText(savedInstanceState.getString("Sensitivity"));
+            specificityPercent.setText(savedInstanceState.getString("Specificity"));
+
+            //Update Remaining Fields based on the above 3 values
+            updateAllFields();
+        }
+        super.onViewStateRestored(savedInstanceState);
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ public class NNTMoreInfoScreen extends Fragment
         View view = inflater.inflate(R.layout.nntmoreinfo_screen, container, false);
 
         nntMoreInfoText = view.findViewById(R.id.nnt_moreInfo_text);
-        nntMoreInfoText.setMovementMethod(new ScrollingMovementMethod());
         nntMoreInfoText.setText(R.string.nnt_moreInfo_text);
 
         ((EBMCommunicator) getActivity()).setDrawerState(false);

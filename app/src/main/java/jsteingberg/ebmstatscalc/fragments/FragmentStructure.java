@@ -2,9 +2,8 @@ package jsteingberg.ebmstatscalc.fragments;
 
 import android.view.View;
 
-import jsteingberg.ebmstatscalc.util.HelperView;
-
 public interface FragmentStructure {
+
     /**
      * Method where all components are initialized from the View
      *
@@ -15,7 +14,7 @@ public interface FragmentStructure {
     /**
      * Method to set restrictions (if any needed) on components
      */
-    void setFilters(HelperView helperView);
+    void setFilters();
 
     /**
      * Method to assign listeners to components

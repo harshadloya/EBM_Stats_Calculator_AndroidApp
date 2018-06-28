@@ -603,7 +603,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="24dp"
         android:text="@string/moreInfoButton"
-        android:textColor="@color/mainScreenTabColor"
+        android:textColor="@color/homeTabColor"
         android:textSize="17sp"
         android:background="@drawable/rectborder"
         app:layout_constraintEnd_toEndOf="parent"

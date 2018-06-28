@@ -1,9 +1,12 @@
 package jsteingberg.ebmstatscalc.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,9 +23,10 @@ import jsteingberg.ebmstatscalc.fragments.tabs.DisclaimerScreen;
 import jsteingberg.ebmstatscalc.fragments.tabs.HomeScreen;
 import jsteingberg.ebmstatscalc.fragments.tabs.MoreAppsScreen;
 import jsteingberg.ebmstatscalc.fragments.tabs.ReferencesScreen;
+import jsteingberg.ebmstatscalc.util.AlertDialogFragment;
 import jsteingberg.ebmstatscalc.util.UpdateScreen;
 
-public class MainActivity extends AppCompatActivity implements EBMCommunicator {
+public class MainActivity extends AppCompatActivity implements EBMCommunicator, AlertDialogFragment.InfoDialogListener {
     //private static final int MY_PERMISSIONS_REQUEST_GET_ACCOUNTS = 5555;
     //private static final int REQUEST_CODE_PICK_ACCOUNT = 5005;
     private  NavigationView navigationView;
@@ -31,13 +35,21 @@ public class MainActivity extends AppCompatActivity implements EBMCommunicator {
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout drawer;
 
+    NavigationView.OnNavigationItemSelectedListener drawerOnNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            //DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return navigationFunctionality(item);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         drawer = findViewById(R.id.drawer_layout);
         drawerToggle = new ActionBarDrawerToggle(
@@ -68,11 +80,43 @@ public class MainActivity extends AppCompatActivity implements EBMCommunicator {
         }*/
 
         //getDetailsForDrawer(navigationView);
-        updateUI(new HomeScreen(), R.color.mainScreenTabColor);
+
+        if (savedInstanceState == null) {
+            SharedPreferences sharedPreferencesNNT = getSharedPreferences(getString(R.string.nnt_preference_file_key), Context.MODE_PRIVATE);
+            sharedPreferencesNNT.edit().clear().apply();
+
+            SharedPreferences sharedPreferencesSensSpec = getSharedPreferences(getString(R.string.nnt_preference_file_key), Context.MODE_PRIVATE);
+            sharedPreferencesSensSpec.edit().clear().apply();
+
+            SharedPreferences sharedPreferencesLikelihood = getSharedPreferences(getString(R.string.nnt_preference_file_key), Context.MODE_PRIVATE);
+            sharedPreferencesLikelihood.edit().clear().apply();
+            showInfoDialog();
+        /*  navigationView.setBackgroundColor(getResources().getColor(R.color.mainScreenTabColor));
+            bottomNavigationView.setBackgroundColor(getResources().getColor(R.color.mainScreenTabColor));*/
+        }
+    }
+
+    public void showInfoDialog() {
+        // Create an instance of the dialog fragment and show it
+        DialogFragment dialog = new AlertDialogFragment();
+        dialog.show(getSupportFragmentManager(), "AlertDialogFragment");
+
+        /*
+        TextView alertMsg = (TextView) dialog.getView().findViewById(android.R.id.message);
+        alertMsg.setTextSize(20.0f);
+
+        Button alertBtn = dialog.getView().getButton(AlertDialog.BUTTON_NEUTRAL);
+        alertBtn.setTextSize(18.0f);*/
+    }
+
+    @Override
+    public void onDialogClick(DialogFragment dialog) {
+        dialog.dismiss();
+        updateUI(new HomeScreen(), R.color.homeTabColor);
         navigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
     }
 
-/*
+    /*
     Removing Intended Functionality as it goes beyond the need and scope of project
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
@@ -172,15 +216,27 @@ public class MainActivity extends AppCompatActivity implements EBMCommunicator {
         return super.onOptionsItemSelected(item);
     }
 
-    NavigationView.OnNavigationItemSelectedListener drawerOnNavigationItemSelectedListener = new NavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item)
+    @Override
+    protected void onResume() {
+        if (bottomNavigationView.getMenu().findItem(R.id.navigation_home).isChecked()) {
+            navigationView.setBackgroundColor(getResources().getColor(R.color.homeTabColor));
+            bottomNavigationView.setBackgroundColor(getResources().getColor(R.color.homeTabColor));
+        } else if (bottomNavigationView.getMenu().findItem(R.id.navigation_disclaimer).isChecked())
         {
-            DrawerLayout drawer = findViewById(R.id.drawer_layout);
-            drawer.closeDrawer(GravityCompat.START);
-            return navigationFunctionality(item);
+            navigationView.setBackgroundColor(getResources().getColor(R.color.disclaimerTabColor));
+            bottomNavigationView.setBackgroundColor(getResources().getColor(R.color.disclaimerTabColor));
+        } else if (bottomNavigationView.getMenu().findItem(R.id.navigation_aboutApp).isChecked()) {
+            navigationView.setBackgroundColor(getResources().getColor(R.color.aboutAppTabColor));
+            bottomNavigationView.setBackgroundColor(getResources().getColor(R.color.aboutAppTabColor));
+        } else if (bottomNavigationView.getMenu().findItem(R.id.navigation_references).isChecked()) {
+            navigationView.setBackgroundColor(getResources().getColor(R.color.referencesTabColor));
+            bottomNavigationView.setBackgroundColor(getResources().getColor(R.color.referencesTabColor));
+        } else if (bottomNavigationView.getMenu().findItem(R.id.navigation_moreApps).isChecked()) {
+            navigationView.setBackgroundColor(getResources().getColor(R.color.moreAppsTabColor));
+            bottomNavigationView.setBackgroundColor(getResources().getColor(R.color.moreAppsTabColor));
         }
-    };
+        super.onResume();
+    }
 
     private boolean navigationFunctionality(MenuItem item)
     {
@@ -193,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements EBMCommunicator {
 
             case R.id.navigation_home:
                 HomeScreen homeScreen = new HomeScreen();
-                updateUI(homeScreen, R.color.mainScreenTabColor);
+                updateUI(homeScreen, R.color.homeTabColor);
 
                 if(id == R.id.navigation_home)
                 {
@@ -266,5 +322,19 @@ public class MainActivity extends AppCompatActivity implements EBMCommunicator {
         UpdateScreen.performScreenUpdateTabs(fragment, getSupportFragmentManager());
         navigationView.setBackgroundColor(getResources().getColor(menuColor));
         bottomNavigationView.setBackgroundColor(getResources().getColor(menuColor));
+    }
+
+    @Override
+    protected void onDestroy() {
+        SharedPreferences sharedPreferencesNNT = getSharedPreferences(getString(R.string.nnt_preference_file_key), Context.MODE_PRIVATE);
+        sharedPreferencesNNT.edit().clear().commit();
+
+        SharedPreferences sharedPreferencesSensSpec = getSharedPreferences(getString(R.string.nnt_preference_file_key), Context.MODE_PRIVATE);
+        sharedPreferencesSensSpec.edit().clear().commit();
+
+        SharedPreferences sharedPreferencesLikelihood = getSharedPreferences(getString(R.string.nnt_preference_file_key), Context.MODE_PRIVATE);
+        sharedPreferencesLikelihood.edit().clear().commit();
+
+        super.onDestroy();
     }
 }

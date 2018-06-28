@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.method.LinkMovementMethod;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ public class ReferencesScreen extends Fragment {
 
         mTextMessage = view.findViewById(R.id.message);
         mTextMessage.setText(R.string.refScreen_text);
-        mTextMessage.setMovementMethod(ScrollingMovementMethod.getInstance());
         mTextMessage.setMovementMethod(LinkMovementMethod.getInstance());
 
         return view;

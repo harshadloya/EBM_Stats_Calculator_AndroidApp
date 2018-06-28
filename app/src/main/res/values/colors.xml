@@ -3,8 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="mainScreenTabColor">#2196F3</color>
-    <color name="homeTabColor">#9E9E9E</color>
+    <color name="mainScreenTabColor">#9E9E9E</color>
+    <color name="homeTabColor">#2196F3</color>
     <color name="disclaimerTabColor">#F44336</color>
     <color name="aboutAppTabColor">#9C27B0</color>
     <color name="referencesTabColor">#009688</color>

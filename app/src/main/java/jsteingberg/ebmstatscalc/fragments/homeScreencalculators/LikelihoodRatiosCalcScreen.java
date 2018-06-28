@@ -1,6 +1,7 @@
 package jsteingberg.ebmstatscalc.fragments.homeScreencalculators;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -25,7 +26,9 @@ import jsteingberg.ebmstatscalc.EBMCommunicator;
 import jsteingberg.ebmstatscalc.R;
 import jsteingberg.ebmstatscalc.fragments.FragmentStructure;
 import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.moreInfoFragments.PostTestMoreInfoScreen;
-import jsteingberg.ebmstatscalc.util.HelperView;
+import jsteingberg.ebmstatscalc.util.UpdateScreen;
+
+import static jsteingberg.ebmstatscalc.util.HelperView.setFiltersEditText;
 
 public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStructure {
     private ConstraintLayout likelihoodParent;
@@ -42,6 +45,19 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
     private TextView postTestPos;
     private TextView postTestNeg;
 
+    private SharedPreferences sharedPreferences;
+    private View.OnClickListener BtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            sharedPreferences.edit().putString("Check", "True").commit();
+            sharedPreferences.edit().putString("Pretest", preTestEditText.getText().toString()).commit();
+            sharedPreferences.edit().putString("LR+", likelihoodPosEditText.getText().toString()).commit();
+            sharedPreferences.edit().putString("LR-", likelihoodNegEditText.getText().toString()).commit();
+
+            PostTestMoreInfoScreen postTestMoreInfoScreen = new PostTestMoreInfoScreen();
+            UpdateScreen.performScreenUpdateButtons(postTestMoreInfoScreen, getFragmentManager(), "replaceWithLikelihoodCalculatorMoreInfoScreen", (AppCompatActivity) getActivity());
+        }
+    };
     private TextWatcher preTestWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -63,6 +79,22 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
         }
     };
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.likelihood_ratios_screen, container, false);
+
+        initializeComponents(view);
+        setFilters();
+        assignListeners(view);
+
+        updateFieldsIfNeeded();
+
+        ((EBMCommunicator) getActivity()).setDrawerState(false);
+
+        return view;
+    }
+
     @Override
     public void initializeComponents(View view) {
         likelihoodParent = view.findViewById(R.id.likelihoodcalc_parent);
@@ -78,6 +110,30 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
 
         postTestPos = view.findViewById(R.id.likelihood_testPosVal);
         postTestNeg = view.findViewById(R.id.likelihood_testNegVal);
+
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.likelihood_preference_file_key), Context.MODE_PRIVATE);
+    }
+
+    @Override
+    public void setFilters() {
+        setFiltersEditText(preTestEditText, "0.0", "100.0");
+        //helperView.setFiltersEditText(likelihoodPosEditText, "0.0", "999.9");
+        //helperView.setFiltersEditText(likelihoodNegEditText, "0.0000", "10.0000");
+    }
+
+    @Override
+    public void assignListeners(View v) {
+        preTestBar.setOnSeekBarChangeListener(preTestSeekBarProgressListener);
+
+        preTestEditText.setOnFocusChangeListener(preTestOnFocusChangeListener);
+        preTestEditText.setOnEditorActionListener(onEditorActionListener);
+
+        likelihoodPosEditText.setOnFocusChangeListener(preTestOnFocusChangeListener);
+        likelihoodPosEditText.setOnEditorActionListener(onEditorActionListener);
+        likelihoodNegEditText.setOnFocusChangeListener(preTestOnFocusChangeListener);
+        likelihoodNegEditText.setOnEditorActionListener(onEditorActionListener);
+
+        moreInfoBtn.setOnClickListener(BtnClickListener);
     }
 
     private TextWatcher likelihoodPosNegWatcher = new TextWatcher() {
@@ -94,6 +150,7 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
         public void afterTextChanged(Editable s) {
         }
     };
+
     private SeekBar.OnSeekBarChangeListener preTestSeekBarProgressListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -112,6 +169,7 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
         public void onStopTrackingTouch(SeekBar seekBar) {
         }
     };
+
     private View.OnFocusChangeListener preTestOnFocusChangeListener = new View.OnFocusChangeListener() {
         @Override
         public void onFocusChange(View v, boolean hasFocus) {
@@ -136,31 +194,6 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
         }
     };
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.likelihood_ratios_screen, container, false);
-
-        initializeComponents(view);
-
-        PostTestMoreInfoScreen postTestMoreInfoScreen = new PostTestMoreInfoScreen();
-        HelperView helperView = new HelperView(postTestMoreInfoScreen, getFragmentManager(), "replaceWithLikelihoodCalculatorMoreInfoScreen", (AppCompatActivity) getActivity());
-        moreInfoBtn.setOnClickListener(helperView.BtnClickListener);
-
-        setFilters(helperView);
-        assignListeners(view);
-
-        ((EBMCommunicator) getActivity()).setDrawerState(false);
-
-        return view;
-    }
-
-    @Override
-    public void setFilters(HelperView helperView) {
-        helperView.setFiltersEditText(preTestEditText, "0.0", "100.0");
-        //helperView.setFiltersEditText(likelihoodPosEditText, "0.0", "999.9");
-        //helperView.setFiltersEditText(likelihoodNegEditText, "0.0000", "10.0000");
-    }
 
     private EditText.OnEditorActionListener onEditorActionListener = new EditText.OnEditorActionListener() {
         @Override
@@ -176,18 +209,16 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
         }
     };
 
-    @Override
-    public void assignListeners(View v) {
-        preTestBar.setOnSeekBarChangeListener(preTestSeekBarProgressListener);
+    private void updateFieldsIfNeeded() {
+        String check = sharedPreferences.getString("Check", "");
+        if (!check.equalsIgnoreCase("")) {
+            preTestEditText.setText(sharedPreferences.getString("Pretest", ""));
+            likelihoodPosEditText.setText(sharedPreferences.getString("LR+", ""));
+            likelihoodNegEditText.setText(sharedPreferences.getString("LR-", ""));
 
-        preTestEditText.setOnFocusChangeListener(preTestOnFocusChangeListener);
-        preTestEditText.setOnEditorActionListener(onEditorActionListener);
-
-        likelihoodPosEditText.setOnFocusChangeListener(preTestOnFocusChangeListener);
-        likelihoodPosEditText.setOnEditorActionListener(onEditorActionListener);
-        likelihoodNegEditText.setOnFocusChangeListener(preTestOnFocusChangeListener);
-        likelihoodNegEditText.setOnEditorActionListener(onEditorActionListener);
-
+            updateOtherFields();
+            sharedPreferences.edit().clear().apply();
+        }
     }
 
     private void updateOtherFields() {
@@ -250,5 +281,30 @@ public class LikelihoodRatiosCalcScreen extends Fragment implements FragmentStru
     public void onDestroyView() {
         ((EBMCommunicator) getActivity()).setDrawerState(true);
         super.onDestroyView();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+
+        if (outState != null) {
+            outState.putString("Pretest", preTestEditText.getText().toString());
+            outState.putString("LR+", likelihoodPosEditText.getText().toString());
+            outState.putString("LR-", likelihoodNegEditText.getText().toString());
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+            preTestEditText.setText(savedInstanceState.getString("Pretest"));
+            likelihoodPosEditText.setText(savedInstanceState.getString("LR+"));
+            likelihoodNegEditText.setText(savedInstanceState.getString("LR-"));
+
+            //Update Remaining Fields based on the above 3 values
+            updateOtherFields();
+        }
+        super.onViewStateRestored(savedInstanceState);
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +23,6 @@ public class PostTestMoreInfoScreen extends Fragment
         View view = inflater.inflate(R.layout.posttest_moreinfo_screen, container, false);
 
         postTestMoreInfoText = view.findViewById(R.id.posttest_moreInfo_text);
-        postTestMoreInfoText.setMovementMethod(new ScrollingMovementMethod());
         postTestMoreInfoText.setText(R.string.postTest_moreInfo_text);
 
         ((EBMCommunicator) getActivity()).setDrawerState(false);

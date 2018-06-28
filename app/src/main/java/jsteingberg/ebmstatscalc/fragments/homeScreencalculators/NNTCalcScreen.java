@@ -1,6 +1,7 @@
 package jsteingberg.ebmstatscalc.fragments.homeScreencalculators;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -24,7 +25,10 @@ import jsteingberg.ebmstatscalc.EBMCommunicator;
 import jsteingberg.ebmstatscalc.R;
 import jsteingberg.ebmstatscalc.fragments.FragmentStructure;
 import jsteingberg.ebmstatscalc.fragments.homeScreencalculators.moreInfoFragments.NNTMoreInfoScreen;
-import jsteingberg.ebmstatscalc.util.HelperView;
+import jsteingberg.ebmstatscalc.util.UpdateScreen;
+
+import static jsteingberg.ebmstatscalc.util.HelperView.setFiltersEditText;
+import static jsteingberg.ebmstatscalc.util.HelperView.setFiltersEditText_2Decimals;
 
 public class NNTCalcScreen extends Fragment implements FragmentStructure
 {
@@ -42,6 +46,18 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
     private EditText rateEditText10;
     private TextView rateTextView11;
 
+    private SharedPreferences sharedPreferences;
+    public View.OnClickListener BtnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            sharedPreferences.edit().putString("TextView3", rateTextView3.getText().toString()).commit();
+            sharedPreferences.edit().putString("TextView6", rateTextView6.getText().toString()).commit();
+            sharedPreferences.edit().putString("TextView11", rateTextView11.getText().toString()).commit();
+
+            NNTMoreInfoScreen nntMoreInfoScreen = new NNTMoreInfoScreen();
+            UpdateScreen.performScreenUpdateButtons(nntMoreInfoScreen, getFragmentManager(), "replaceWithNNTMoreInfoScreen", (AppCompatActivity) getActivity());
+        }
+    };
     /**
      * Text Change Watcher that listens to changes in the two percentages edittexts and sets the NNT value accordingly
      */
@@ -86,6 +102,27 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
         }
     };
 
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.nntcalcscreen, container, false);
+
+        initializeComponents(view);
+
+        rateTextView3.setText(sharedPreferences.getString("TextView3", "1.0"));
+        rateTextView6.setText(sharedPreferences.getString("TextView6", "1.0"));
+        rateTextView11.setText(sharedPreferences.getString("TextView11", "10.0"));
+
+        sharedPreferences.edit().clear().commit();
+
+        setFilters();
+        assignListeners(view);
+
+        ((EBMCommunicator) getActivity()).setDrawerState(false);
+
+        return view;
+    }
+
     @Override
     public void initializeComponents(View view) {
         moreInfoBtn = view.findViewById(R.id.nnt_moreInfoBtn);
@@ -103,37 +140,20 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
         rateEditText9 = view.findViewById(R.id.nnt_rateEdit9);
         rateEditText10 = view.findViewById(R.id.nnt_rateEdit10);
         rateTextView11 = view.findViewById(R.id.nnt_rateEdit11);
-    }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.nntcalcscreen, container, false);
-
-        initializeComponents(view);
-
-        NNTMoreInfoScreen nntMoreInfoScreen = new NNTMoreInfoScreen();
-        HelperView helperView = new HelperView(nntMoreInfoScreen, getFragmentManager(), "replaceWithNNTMoreInfoScreen", (AppCompatActivity) getActivity());
-        moreInfoBtn.setOnClickListener(helperView.BtnClickListener);
-
-        setFilters(helperView);
-        assignListeners(view);
-
-        ((EBMCommunicator) getActivity()).setDrawerState(false);
-
-        return view;
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.nnt_preference_file_key), Context.MODE_PRIVATE);
     }
 
     @Override
-    public void setFilters(HelperView helperView) {
-        helperView.setFiltersEditText_2Decimals(rateEditText1, "0.00", "1.00");
-        helperView.setFiltersEditText_2Decimals(rateEditText2, "0.00", "1.00");
-        helperView.setFiltersEditText(rateEditText4, "0", "100");
-        helperView.setFiltersEditText(rateEditText5, "0", "100");
-        helperView.setFiltersEditText(rateEditText7, "0", "9999");
-        helperView.setFiltersEditText(rateEditText8, "1", "9999");
-        helperView.setFiltersEditText(rateEditText9, "0", "9999");
-        helperView.setFiltersEditText(rateEditText10, "1", "9999");
+    public void setFilters() {
+        setFiltersEditText_2Decimals(rateEditText1, "0.00", "1.00");
+        setFiltersEditText_2Decimals(rateEditText2, "0.00", "1.00");
+        setFiltersEditText(rateEditText4, "0", "100");
+        setFiltersEditText(rateEditText5, "0", "100");
+        setFiltersEditText(rateEditText7, "0", "9999");
+        setFiltersEditText(rateEditText8, "1", "9999");
+        setFiltersEditText(rateEditText9, "0", "9999");
+        setFiltersEditText(rateEditText10, "1", "9999");
     }
 
     /**
@@ -146,8 +166,6 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
         for (int i = 0; i < count; i++) {
             View child = container.getChildAt(i);
             if (child instanceof EditText) {
-                //rateEditText = (EditText) child;
-                //int currId = rateEditText.getId();
                 //((EditText) child).setOnFocusChangeListener(watcherFocusChangeListener);
                 child.setOnFocusChangeListener(watcherFocusChangeListener);
                 ((EditText) child).setOnEditorActionListener(editTextsEditorActionListener);
@@ -238,23 +256,10 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
         }
     };
 
-    /**
-     * Method used to get value from the edittexts
-     * @param editText - the edittext from which the value need to be returned
-     * @return the value entered in the edittext, if no value present returns 0.0
-     */
-    private double getValue(EditText editText) {
-        if(!editText.getText().toString().equalsIgnoreCase(""))
-            return Double.parseDouble(editText.getText().toString());
-        else
-            return 0.0;
-    }
-
     @Override
     public void assignListeners(View v) {
-        //rateEditText1.setOnFocusChangeListener(watcherFocusChangeListener);
-        //for(EditText rateEditTexts: v)
         editTextsRecurseListeners((ViewGroup) v);
+        moreInfoBtn.setOnClickListener(BtnClickListener);
 
     }
 
@@ -341,6 +346,19 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
         }
     };
 
+    /**
+     * Method used to get value from the edittexts
+     *
+     * @param editText - the edittext from which the value need to be returned
+     * @return the value entered in the edittext, if no value present returns 0.0
+     */
+    private double getValue(EditText editText) {
+        if (!editText.getText().toString().equalsIgnoreCase(""))
+            return Double.parseDouble(editText.getText().toString());
+        else
+            return 0.0;
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(R.string.actionbar_NNTScreen);
@@ -351,5 +369,26 @@ public class NNTCalcScreen extends Fragment implements FragmentStructure
     public void onDestroyView() {
         ((EBMCommunicator) getActivity()).setDrawerState(true);
         super.onDestroyView();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (outState != null) {
+            outState.putString("TextView3", rateTextView3.getText().toString());
+            outState.putString("TextView6", rateTextView6.getText().toString());
+            outState.putString("TextView11", rateTextView11.getText().toString());
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+
+        if (savedInstanceState != null) {
+            rateTextView3.setText(savedInstanceState.getString("TextView3"));
+            rateTextView6.setText(savedInstanceState.getString("TextView6"));
+            rateTextView11.setText(savedInstanceState.getString("TextView11"));
+        }
+        super.onViewStateRestored(savedInstanceState);
     }
 }
